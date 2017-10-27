@@ -39,6 +39,8 @@ didSignInForUser:(GIDGoogleUser *)user
         
     }else
     {
+
+//改改改aaa切换账号的谷歌登录
         [HTprogressHUD showjuhuaText:bendihua(@"正在登录")];
         NSString*str=[NSString stringWithFormat:@"username=%@#google&name=%@&uuid=%@&token=%@",[GIDSignIn sharedInstance].currentUser.userID,[GIDSignIn sharedInstance].currentUser.profile.name,[UUID getUUID],user.authentication.idToken];
         NSString*rsaStr=[RSA encryptString:str];
@@ -214,6 +216,8 @@ didSignInForUser:(GIDGoogleUser *)user
     }}
 -(void)gameCenterLoginConnection
 {
+    
+//改改改aaa 切换账号的gamecenter登录
     NSString*str=[NSString stringWithFormat:@"username=%@#apple&name=%@&uuid=%@",
                   [GKLocalPlayer localPlayer].playerID,
                   [GKLocalPlayer localPlayer].alias,

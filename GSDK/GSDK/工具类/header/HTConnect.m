@@ -223,6 +223,8 @@
  */
 +(void)getProductsIDwithServer:(NSString*)server ifSuccess:(void(^)(NSArray* response))success orError:(void(^)(NSError*error))error
 {
+    
+//改改改aaa获取商品列表
     NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/%@/product?package=%@&os=ios&channel=%@&server=%@",[USER_DEFAULT objectForKey:@"appID"],[NSBundle mainBundle].bundleIdentifier,[USER_DEFAULT objectForKey:@"channel"],server];
     NSURL *url=[NSURL URLWithString:string];
     NSURLRequest *request=[NSURLRequest requestWithURL:url];

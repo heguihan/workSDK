@@ -11,6 +11,7 @@
 @implementation HTAddBindInfoTodict
 +(void)addInfoToDictType:(NSString*)type auth_name:(NSString*)auth_name
 {
+//改改改aaa绑定过后的信息存储
     NSMutableDictionary*dict=[NSMutableDictionary dictionaryWithDictionary:[USER_DEFAULT objectForKey:@"userInfo"]];
     NSMutableDictionary*addDcit;
     if ([type isEqualToString:@"email"]) {

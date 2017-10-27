@@ -37,6 +37,7 @@
 }
 +(void)setFastRequest:(NSMutableURLRequest*)request AndNameFormdict:(NSDictionary*)dict
 {
+//改改改aaa信息保存
    
     HTNameAndRequestModel*model= [HTNameAndRequestModel sharedRequestModel];
     model.requset=request;

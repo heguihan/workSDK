@@ -150,7 +150,7 @@
         }else//设备登录,没有绑定
         {
             userInfo=[NSDictionary dictionaryWithObjectsAndKeys:@"device",@"type",[dict valueForKeyPath:@"data.bind.device.auth_id"],@"name", nil];
-            
+            NSLog(@"userinfo=%@",userInfo);
             return userInfo;
         }
     }

@@ -55,6 +55,8 @@
 }
 -(void)resetAction:(HTBaseButton*)sender
 {
+    
+//改改改aaa忘记密码
     if (![regex isValidateEmail:self.emailTextfield.text]) {
         
         [HTAlertView showAlertViewWithText:bendihua(@"请输入正确的邮箱") com:^{}];

@@ -74,6 +74,7 @@
 {
     
     NSDictionary*showDict= [HTBindInfo showBindAccountName];
+    NSLog(@"dict=%@",showDict);
     
     UIImage*qudaoImage;
     NSString*leftStr;
@@ -87,8 +88,12 @@
             leftStr=bendihua(@"游客账号:");
 
     }
+//改改改aaa显示界面
     
     NSString* textStr=showDict[@"name"];
+    NSLog(@"===============分割线===================");
+    NSLog(@"name====%@",textStr);
+    NSLog(@"===============分割线===================");
     if (!self.label) {
         self.label=[[HTBaseLabel alloc]init];
             }

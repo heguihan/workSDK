@@ -110,9 +110,19 @@
    [self.phone loginWithPhoneNumber:self ifSuccess:^(id data) {
        NSString*appID=[USER_DEFAULT objectForKey:@"appID"];
        NSDictionary*userDic = [USER_DEFAULT objectForKey:@"userInfo"];
-       NSString*dataStr=[NSString stringWithFormat:@"type=accountkit&auth=%@&name=%@&token=%@",data[@"id"],data[@"phone"],[userDic valueForKeyPath:@"data.token"]];
-       NSString*RSADataStr=[RSA encryptString:dataStr];
-       NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/bind?app=%@&data=%@&format=json&version=2.0",appID,RSADataStr];
+       
+       NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
+       NSString *pram_access_token =[userDic valueForKeyPath:@"data.token"];
+       NSString *pram_platform = @"google";
+       NSString *pram_code = @"待定";
+       NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+       NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
+       
+       
+       
+//       NSString*dataStr=[NSString stringWithFormat:@"type=accountkit&auth=%@&name=%@&token=%@",data[@"id"],data[@"phone"],[userDic valueForKeyPath:@"data.token"]];
+//       NSString*RSADataStr=[RSA encryptString:dataStr];
+//       NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/bind?app=%@&data=%@&format=json&version=2.0",appID,RSADataStr];
        NSURL*url=[NSURL URLWithString:urlStr];
        NSMutableURLRequest*requestq=[NSMutableURLRequest requestWithURL:url];
        [HTNetWorking sendRequest:requestq ifSuccess:^(id response) {
@@ -158,8 +168,8 @@ didSignInForUser:(GIDGoogleUser *)user
         NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
         NSString *pram_access_token =[userDic valueForKeyPath:@"data.token"];
         NSString *pram_platform = @"google";
-        NSString *pram_code = @"待定";
-        NSString *newPramStr = [NSString stringWithFormat:@"ccess_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+        NSString *pram_code = user.authentication.idToken;
+        NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
         NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
         
         

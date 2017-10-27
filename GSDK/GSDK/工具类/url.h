@@ -12,7 +12,12 @@
 //新的域名
 #define SERVER_URL  @"https://hk.account.gamehetu.com/"
 
+//支付的域名
+#define IAP_URL  @"https://hk.trade.gamehetu.com/"
+
 //忘记密码
+
+
 
 //统计接口
 #define STATS_URL  @"/stats/login"

@@ -280,6 +280,9 @@
 
 -(void)sendReceipt:(NSString*)receipt
 {
+    
+    
+///改改改aaa支付订单
     NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/order/notice/apple?"];
     
 //    NSURL*url=[NSURL URLWithString:string];
@@ -330,6 +333,8 @@
 }
 -(void)timeRsendReceipt:(NSString*)receipt
 {
+    
+//改改改aaa支付订单重发
     NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/order/notice/apple?"];
 //    NSURL*url=[NSURL URLWithString:string];
     NSString*parmaStr=[NSString stringWithFormat:@"app=%@&uid=%@&coo_server=%@&coo_uid=%@&extra=%@&receipt=%@",[USER_DEFAULT objectForKey:@"appID"],[USER_DEFAULT objectForKey:@"uid"],[USER_DEFAULT objectForKey:@"coo_server"],[USER_DEFAULT objectForKey:@"coo_uid"],[USER_DEFAULT objectForKey:@"extra"],receipt];

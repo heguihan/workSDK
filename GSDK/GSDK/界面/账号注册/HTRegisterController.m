@@ -178,7 +178,7 @@
         [HTAlertView showAlertViewWithText:bendihua(@"请同意使用者协议") com:nil];
     }else
     {
-//改改改aaa注册
+//改改改aaa注册。。。。注册成功之后信息有没有保存？
         [HTprogressHUD showjuhuaText:@"正在注册"];
         NSMutableURLRequest*request=[HTloginHelp returnRequest:[HTloginHelp returnSignupString] usernameTextField:top passwordTextField:center];
         [HTNetWorking sendRequest:request ifSuccess:^(id response) {

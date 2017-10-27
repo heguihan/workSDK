@@ -117,7 +117,7 @@
         NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
         NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
         NSString *pram_ip = GETIP;
-        NSString *newStr = [NSString stringWithFormat:@"app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&version=%@&channel=%@&ip=%@",pram_app_id, pram_uuid, pram_adid, pram_device, pram_device, pram_version, pram_channel, pram_ip];
+        NSString *newStr = [NSString stringWithFormat:@"app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
 //    NSString*str=[NSString stringWithFormat:@"username=%@#device&name=%@&uuid=%@",identifier,[HTgetDeviceName deviceString],GETUUID];
 //    //加密
 //    NSString*rsaStr=[RSA encryptString:str];
@@ -125,7 +125,7 @@
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
         NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newStr];
         
-        
+        NSLog(@"tttttttt=%@",newUrlStr);
         
 //    NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[USER_DEFAULT objectForKey:@"appID"],rsaStr];
         
@@ -159,7 +159,11 @@
             NSString *access_token = response[@"access_token"];
             [USER_DEFAULT setObject:access_token forKey:@"access_token"];
             [USER_DEFAULT synchronize];
-
+            
+            NSLog(@"===============分割线==================");
+            NSLog(@"open_id=%@",str);
+            NSLog(@"name=%@",response[@"name"]);
+            NSLog(@"===============分割线==================");
             
             
             [HTConnect showAssistiveTouch];
@@ -172,6 +176,7 @@
 
             }else
             {
+                [HTprogressHUD hiddenHUD];
                 [HTAlertView showAlertViewWithText:@"登录失败" com:nil];
                 }
     } failure:^(NSError *error) {
@@ -500,7 +505,10 @@ didSignInForUser:(GIDGoogleUser *)user
                   [HTNameAndRequestModel setFastRequest:request AndNameFormdict:response];
         
         NSString *str = response[@"open_id"];
-        NSLog(@"uid=%@",str);
+        NSLog(@"===============分割线==================");
+        NSLog(@"open_id=%@",str);
+        NSLog(@"name=%@",response[@"name"]);
+        NSLog(@"===============分割线==================");
         [USER_DEFAULT setObject:str forKey:@"uid"];
         //保存access_token
         NSString *access_token = response[@"access_token"];
