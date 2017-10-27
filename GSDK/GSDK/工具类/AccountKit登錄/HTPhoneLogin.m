@@ -65,13 +65,34 @@
         }else
         {
             [HTprogressHUD showjuhuaText:bendihua(@"正在登录")];
-            NSString*dataStr=[NSString stringWithFormat:@"username=%@#accountkit&token=%@&uuid=%@&name=%@",[accessToken accountID],[accessToken tokenString],GETUUID,phoneNum];
-            //加密
-            NSString*rsaStr=[RSA encryptString:dataStr];
-            //拼接加密后文件
-            NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[USER_DEFAULT objectForKey:@"appID"],rsaStr];
+            
+            //platform code app_id uuid adid device version channel ip
+            
+            NSString *pram_platform = @"accountkit";
+            NSString *pram_code = [accessToken tokenString];
+            NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+            NSString *pram_uuid = GETUUID;
+            NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
+            NSString *pram_device = [HTgetDeviceName deviceString];
+            NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
+            NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
+            NSString *pram_ip = GETIP;
+            
+            NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&code=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+            
+            NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
+            
+            NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newPramStr];
+            
+            
+            
+//            NSString*dataStr=[NSString stringWithFormat:@"username=%@#accountkit&token=%@&uuid=%@&name=%@",[accessToken accountID],[accessToken tokenString],GETUUID,phoneNum];
+//            //加密
+//            NSString*rsaStr=[RSA encryptString:dataStr];
+//            //拼接加密后文件
+//            NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[USER_DEFAULT objectForKey:@"appID"],rsaStr];
             //创建url
-            NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSURL *url = [NSURL URLWithString:[newUrlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
             //简历网络请求体
         NSMutableURLRequest * request=[NSMutableURLRequest requestWithURL:url];
@@ -79,6 +100,17 @@
            [HTprogressHUD hiddenHUD];
             if ([response[@"code"] isEqual:@0]) {
              [HTHUD showHUD:bendihua(@"登入成功")];
+                
+                NSString *str = response[@"open_id"];
+                NSLog(@"uid=%@",str);
+                [USER_DEFAULT setObject:str forKey:@"uid"];
+                //保存access_token
+                NSString *access_token = response[@"access_token"];
+                [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+                [USER_DEFAULT synchronize];
+                
+                
+                
                  [HTConnect showAssistiveTouch];
                  [HTNameAndRequestModel setFastRequest:request AndNameFormdict:response];
                  self.neiSuccess(response);

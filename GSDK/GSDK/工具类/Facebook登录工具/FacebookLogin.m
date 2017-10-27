@@ -50,15 +50,33 @@
     if (result) {
         [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelAlert+1;
         [HTprogressHUD  showjuhuaText:bendihua(@"正在登录")];
-                     
-        NSString*str=[NSString stringWithFormat:@"username=%@#facebook&name=%@&uuid=%@&token=%@",result[@"id"],result[@"name"],[UUID getUUID],[FBSDKAccessToken currentAccessToken].tokenString];
-                     
-        NSString*rsaStr=[RSA encryptString:str];
-        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
         
+        //platform code app_id uuid adid device version channel ip
         
-        NSLog(@"打印api = %@",urlStr);
-        NSURL*url=[NSURL URLWithString:urlStr];
+        NSString *pram_platform = @"facebook";
+        NSString *pram_code = [FBSDKAccessToken currentAccessToken].tokenString;
+        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+        NSString *pram_uuid = GETUUID;
+        NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
+        NSString *pram_device = [HTgetDeviceName deviceString];
+        NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
+        NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
+        NSString *pram_ip = GETIP;
+        
+        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&code=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
+        
+        NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newPramStr];
+//        
+//        NSString*str=[NSString stringWithFormat:@"username=%@#facebook&name=%@&uuid=%@&token=%@",result[@"id"],result[@"name"],[UUID getUUID],[FBSDKAccessToken currentAccessToken].tokenString];
+//                     
+//        NSString*rsaStr=[RSA encryptString:str];
+//        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
+//        
+//
+        NSLog(@"打印api = %@",newUrlStr);
+        NSURL*url=[NSURL URLWithString:newUrlStr];
         NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url];
         
         

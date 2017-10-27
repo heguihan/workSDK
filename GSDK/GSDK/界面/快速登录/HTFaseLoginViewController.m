@@ -299,14 +299,37 @@ didSignInForUser:(GIDGoogleUser *)user
     {
 //改改改aaa谷歌登录
         [HTprogressHUD showjuhuaText:bendihua(@"正在登录")];
-        NSString*str=[NSString stringWithFormat:@"username=%@#google&name=%@&uuid=%@&token=%@",[GIDSignIn sharedInstance].currentUser.profile.email,[regex deleUrlBugChar:[GIDSignIn sharedInstance].currentUser.profile.name],[UUID getUUID],user.authentication.idToken];
         
-        //platform(第三方平台) code(授权码)，app_id, uuid, adid, device, version, channel, ip
+        //platform code app_id uuid adid device version channel ip
         
-        NSLog(@"google=%@",str);
-        NSString*rsaStr=[RSA encryptString:str];
-        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
-        NSURL*url=[NSURL URLWithString:urlStr];
+        NSString *pram_platform = @"google";
+        NSString *pram_code = user.authentication.idToken;
+        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+        NSString *pram_uuid = GETUUID;
+        NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
+        NSString *pram_device = [HTgetDeviceName deviceString];
+        NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
+        NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
+        NSString *pram_ip = GETIP;
+        
+        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&code=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
+        
+        NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newPramStr];
+
+//        
+//        
+//        NSString*str=[NSString stringWithFormat:@"username=%@#google&name=%@&uuid=%@&token=%@",[GIDSignIn sharedInstance].currentUser.profile.email,[regex deleUrlBugChar:[GIDSignIn sharedInstance].currentUser.profile.name],[UUID getUUID],user.authentication.idToken];
+//        
+//        //platform(第三方平台) code(授权码)，app_id, uuid, adid, device, version, channel, ip
+//        
+//        NSLog(@"google=%@",str);
+//        NSString*rsaStr=[RSA encryptString:str];
+//        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
+        
+        
+        NSURL*url=[NSURL URLWithString:newUrlStr];
         NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url];
         
         [HTNetWorking sendRequest:request ifSuccess:^(id response) {
@@ -318,10 +341,17 @@ didSignInForUser:(GIDGoogleUser *)user
                 NSDictionary*googleDic=[NSDictionary dictionaryWithObjectsAndKeys:[GIDSignIn sharedInstance].currentUser.userID, @"googleID",[GIDSignIn sharedInstance].currentUser.profile.name,@"googleName",user.authentication.idToken,@"googleToken",nil];
                 
                 //google登录成功返回
-                NSString *str = response[@"data"][@"uid"];
+//                NSString *str = response[@"data"][@"uid"];
+//                NSLog(@"uid=%@",str);
+//                
+//                [USER_DEFAULT setObject:str forKey:@"uid"];
+//                [USER_DEFAULT synchronize];
+                NSString *str = response[@"open_id"];
                 NSLog(@"uid=%@",str);
-                
                 [USER_DEFAULT setObject:str forKey:@"uid"];
+                //保存access_token
+                NSString *access_token = response[@"access_token"];
+                [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                 [USER_DEFAULT synchronize];
                 
                 
