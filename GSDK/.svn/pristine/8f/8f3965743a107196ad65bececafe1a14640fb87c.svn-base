@@ -1,0 +1,87 @@
+//
+//  FacebookLogin.m
+//  GSDK
+//
+//  Created by 王璟鑫 on 16/8/5.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#import "FacebookLogin.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+@implementation FacebookLogin
+
++(void)logInIfSuccess:(void(^)(id response, NSDictionary*FacebookDict))success failure:(void(^)(NSError*error))failure
+{
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    
+    if ([FBSDKAccessToken currentAccessToken]!=nil) {
+//        [login logOut];
+    }
+    login.loginBehavior = FBSDKLoginBehaviorWeb;
+    
+    [login
+     logInWithReadPermissions: @[@"public_profile",@"read_custom_friendlists",@"user_friends",@"email"]
+     fromViewController:MXRootViewController
+     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         if (error) {
+             NSLog(@"Process error");
+             failure(error);
+         } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+
+         } else {
+             NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                            @"name,id",@"fields",
+                                            nil];
+             FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+                                           initWithGraphPath:@"me"
+                                           parameters:params
+                                           HTTPMethod:@"GET"];
+             [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+                                                   id result,
+                                                   NSError *error) {
+                 NSLog(@"----------%@",result);
+    if (result) {
+                     
+        [HTprogressHUD showjuhua:[UIApplication sharedApplication].keyWindow andText:bendihua(@"正在登录")];
+                     
+        NSString*str=[NSString stringWithFormat:@"username=%@#facebook&name=%@&uuid=%@&token=%@",result[@"id"],result[@"name"],[UUID getUUID],[FBSDKAccessToken currentAccessToken].tokenString];
+                     
+        NSString*rsaStr=[RSA encryptString:str];
+        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
+        NSURL*url=[NSURL URLWithString:urlStr];
+        NSURLRequest*request=[NSURLRequest requestWithURL:url];
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+                         
+                         NSDictionary*dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+            
+                         [HTprogressHUD hiddenHUD:MXRootViewController.view];
+
+                         NSDictionary*facebookDict=[NSDictionary dictionaryWithObjectsAndKeys:result[@"id"], @"facebookID",result[@"name"],@"facebookName",[FBSDKAccessToken currentAccessToken].tokenString,@"facebookToken",nil];
+                         if ([dict[@"code"]isEqualToNumber:@0]) {
+                             
+                             success(dict,facebookDict);
+
+                         }else
+                         {
+                             
+                         }
+                     }];
+                 }
+            else
+                 {
+                     failure(error);
+                     NSLog(@"%@Facebook登录出错",error);
+                 }
+             }];
+         }
+     }];
+
+}
+
+
+@end

@@ -1,0 +1,113 @@
+//
+//  HTAccountController.m
+//  GSDK
+//
+//  Created by 王璟鑫 on 16/8/5.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#import "HTAccountController.h"
+
+@interface HTAccountController ()
+
+@property (nonatomic,strong) HTBaseLabel *logInNameAndImage;
+
+@property (nonatomic,strong) HTBaseView *topView;
+
+@property (nonatomic,strong) HTBaseView *bottomView;
+
+@property (nonatomic,strong) HTBaseButton *changeAccountButton;
+
+@end
+
+@implementation HTAccountController
+
+- (void)viewDidLoad {
+
+    [super viewDidLoad];
+}
+-(instancetype)init
+{
+    if (self=[super init]) {
+        
+        [self configUI];
+    }
+    return self;
+}
+-(void)configUI
+{
+    [self makeLogInNameAndImageLabel];
+    [self makeBackView];
+}
+-(void)makeLogInNameAndImageLabel
+{
+    self.logInNameAndImage=[[HTBaseLabel alloc]init];
+    
+    self.logInNameAndImage.frame=CGRectMake(20, 50, 0, 0);
+    
+    self.logInNameAndImage.font=MXSetSysFont(13);
+    
+    [self.mainView addSubview:self.logInNameAndImage];
+
+    NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:@"当前账号：　"];
+    // 添加表情
+    NSTextAttachment *attch = [[NSTextAttachment alloc] init];
+    // 表情图片
+    attch.image = [UIImage imageNamed:@"1"];
+    
+    // 设置图片大小
+    attch.bounds = CGRectMake(0, -12, 30, 30);
+    
+    NSAttributedString *IMGstring = [NSAttributedString attributedStringWithAttachment:attch];
+    
+    [attri appendAttributedString:IMGstring];
+    
+    NSAttributedString*FinaStr=[[NSAttributedString alloc]initWithString:@"　末日写会"];
+    
+    [attri appendAttributedString:FinaStr];
+    
+    // 用label的attributedText属性来使用富文本
+    self.logInNameAndImage.attributedText = attri;
+    
+    [self.logInNameAndImage sizeToFit];
+}
+-(void)makeBackView
+{
+    UIView*top=[[UIView alloc]init];
+    top.frame=CGRectMake(self.mainView.width*0.1,self.logInNameAndImage.bottom+20, self.mainView.width*0.8, self.mainView.height*0.15);
+    top.backgroundColor=CCyanColor;
+    [self.mainView addSubview:top];
+    
+    UIView*bottom=[[UIView alloc]init];
+    bottom.backgroundColor=CCyanColor;
+    bottom.frame=CGRectMake(top.left, top.bottom+top.height, top.width, top.height);
+    [self.mainView addSubview:bottom];
+    
+    HTBaseButton*but=[HTBaseButton newButton];
+    but.backgroundColor=CBlueColor;
+    but.frame=CGRectMake(0, bottom.bottom+10, 0, 0);
+    [but setTitle:@"切换账号" forState:(UIControlStateNormal)];
+    [but sizeToFit];
+    but.centerX=top.centerX;
+    [self.mainView addSubview:but];
+    
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    
+    [super didReceiveMemoryWarning];
+
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

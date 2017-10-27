@@ -1,0 +1,59 @@
+
+
+//获取设备版本号
+#define IsIOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] <8.0 ? YES : NO)
+
+//判断是不是ipad
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define SCREEN_WIDTH (IsIOS7 ? ([UIScreen mainScreen].bounds.size.height):([UIScreen mainScreen].bounds.size.width))
+#define SCREEN_HEIGHT (IsIOS7 ? ([UIScreen mainScreen].bounds.size.width):([UIScreen mainScreen].bounds.size.height))
+
+#define MAINVIEW_WIDTH [HTOrientation getMainWidth]
+//#define MAINVIEW_WIDTH (SCREEN_WIDTH*0.5)
+#define BEGIN_MAINVIEW [HTOrientation getBeginWidth]
+//#define BEGIN_MAINVIEW 0.25
+
+//沙河路径
+#define Document NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject
+#define FILEPATH [Document stringByAppendingPathComponent:@"suzhu.plist"]
+#define IAP_RECEIPT_FILEPATH [Document stringByAppendingPathComponent:@"iapReceipt.plist"]
+
+#define USERDICT [USER_DEFAULT objectForKey:@"userInfo"]
+#define USERTOKEN [USERDICT valueForKeyPath:@"data.token"]
+
+
+
+
+#define USER_DEFAULT [NSUserDefaults standardUserDefaults]
+#define GETUUID [UUID getUUID]
+#define GETIP   [HTgetIP getIPAddress:YES]
+//本地化字符串
+#define BUNDLE [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"ios" ofType:@"bundle"]]
+#define bendihua(Str) NSLocalizedStringFromTableInBundle(Str, nil, BUNDLE, nil)
+#define imageNamed(name) [UIImage imageWithContentsOfFile:[BUNDLE pathForResource:name ofType:@"png"]]
+
+#import "UIView+UIViewAdditional.h"
+#import "HTBaseViewController.h"
+#import "HTBaseLabel.h"
+#import "HTBaseButton.h"
+#import "MXCommonKit.h"
+#import "HTprogressHUD.h"
+#import "UUID.h"
+#import "regex.h"
+#import "RSA.h"
+#import "HTgetDeviceName.h"
+#import "HTConnect.h"
+#import "HTNetWorking.h"
+#import "HTAlertView.h"
+#import "HTOrientation.h"
+#import "HTBindInfo.h"
+#import "HTNameAndRequestModel.h"
+#import "HTloginHelp.h"
+#import "HTPassValueSingle.h"
+#import "HTpresentWindow.h"
+#import "HTHUD.h"
+#import "url.h"
+#import "HTgetIP.h"
+
+
+

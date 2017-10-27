@@ -1,0 +1,71 @@
+//  HTloginHelp.m
+//  NewSDkBy
+//
+//  Created by 王璟鑫 on 16/1/15.
+//  Copyright © 2016年 www.gamehetu.com. All rights reserved.
+//
+#import "HTgetDeviceName.h"
+#import "HTloginHelp.h"
+#import "RSA.h"
+//#import "SvUDIDTools.h"
+#import "UUID.h"
+
+@implementation HTloginHelp
+
++(NSMutableURLRequest*)returnRequest:(NSString*)mainStr usernameTextField:(UITextField*)usernameTextField passwordTextField:(UITextField*)passwordTextField
+{
+    NSString*nameAndWord;
+    //主体
+    NSURL*url=[NSURL URLWithString:mainStr];
+    
+    nameAndWord=[NSString stringWithFormat:@"username=%@&password=%@&uuid=%@",usernameTextField.text,passwordTextField.text,[UUID getUUID]];
+  
+   
+    //将获取的信息加密
+    NSString*dataStr=[RSA encryptString:nameAndWord];
+    NSString*appId=[USER_DEFAULT objectForKey:@"appID"];
+    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&data=%@&format=json",appId,dataStr];
+    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:15];
+    [request setHTTPMethod:@"POST"];
+    NSData*paraData=[parmaStr dataUsingEncoding:NSUTF8StringEncoding];
+    [request setHTTPBody:paraData];
+    return request;
+}
++(NSString*)returnLoginString
+{
+NSString*str=@"http://c.gamehetu.com/passport/login?";
+    return str;
+}
++(NSString*)returnSignupString
+{
+    NSString*str=@"http://c.gamehetu.com/passport/register?";
+    return str;
+}
++(NSDictionary*)jsonBecomeDict:(NSData*)data
+{
+    NSDictionary*dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+    return dict;
+}
++(NSMutableURLRequest*)returnDeviceRequest
+{
+    NSString*appID=[USER_DEFAULT objectForKey:@"appID"];
+    NSString *identifier = [UUID getUUID];
+    NSString*str=[NSString stringWithFormat:@"username=%@#device&name=%@&uuid=%@",identifier,[HTgetDeviceName deviceString],[UUID getUUID]];
+    NSString*rsaStr=[RSA encryptString:str];
+    NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json",appID,rsaStr];
+    NSURL*url=[NSURL URLWithString:urlStr];
+    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url];
+    return request;
+}
++(NSMutableURLRequest*)returnFacebookRequest
+{
+    NSString*str=[NSString stringWithFormat:@"username=%@#facebook&name=%@&uuid=%@",[USER_DEFAULT objectForKey:@"id"],[USER_DEFAULT objectForKey:@"name"],[UUID getUUID]];
+    NSString*rsaStr=[RSA encryptString:str];
+    NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json",[USER_DEFAULT objectForKey:@"appID"],rsaStr];
+    NSURL*url=[NSURL URLWithString:urlStr];
+    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:20];
+    return request;
+
+}
+
+@end

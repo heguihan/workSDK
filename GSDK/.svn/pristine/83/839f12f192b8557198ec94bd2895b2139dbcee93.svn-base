@@ -1,0 +1,23 @@
+//
+//  HTBaseViewController.h
+//  NSDK
+//
+//  Created by 王璟鑫 on 16/8/1.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface HTBaseViewController : UIViewController
+
+//所有controller都继承这个
+@property (nonatomic,strong) UIView*mainView;
+
+@property (nonatomic,strong) UIView*naviView;
+
+@property (nonatomic,strong) UIButton*leftButton;
+
+@property (nonatomic,strong) UIButton*rightButton;
+
+@property (nonatomic,strong) UILabel*titleLabel;
+@end

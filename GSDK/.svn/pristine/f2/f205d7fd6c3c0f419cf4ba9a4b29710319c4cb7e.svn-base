@@ -1,0 +1,37 @@
+//
+//  ViewController.m
+//  GSDK
+//
+//  Created by 王璟鑫 on 16/8/4.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+#import "HTBaseNavigationController.h"
+#import "ViewController.h"
+#import "HTFaseLoginViewController.h"
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.view.backgroundColor=[UIColor greenColor];
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    HTFaseLoginViewController*Fast=[[HTFaseLoginViewController alloc]init];
+    
+    HTBaseNavigationController*Navi=[[HTBaseNavigationController alloc]initWithRootViewController:Fast];
+    
+    [self presentViewController:Navi animated:YES completion:nil];
+    
+}
+@end

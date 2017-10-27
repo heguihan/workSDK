@@ -1,0 +1,88 @@
+//
+//  HTPCH.pch
+//  NSDK
+//
+//  Created by 王璟鑫 on 16/7/22.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#ifndef HTPCH_pch
+#define HTPCH_pch
+
+
+
+
+#endif /* HTPCH_pch */
+//DEBUG  模式下打印日志,当前行
+#ifdef DEBUG
+#define NSLog(format, ...) do {                                                             \
+fprintf(stderr, "<%s : %d> %s\n",                                           \
+[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],  \
+__LINE__, __func__);                                                        \
+(NSLog)((format), ##__VA_ARGS__);                                           \
+fprintf(stderr, "-------\n");                                               \
+} while (0)
+#else
+#define NSLog(...)
+#endif
+
+
+//获取设备版本号
+#define IsIOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] <=8.0 ? YES : NO)
+
+
+#define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+//本地化字符串
+#define BUNDLE [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"ios" ofType:@"bundle"]]
+#define bendihua(Str) NSLocalizedStringFromTableInBundle(Str, nil, BUNDLE, nil)
+//判断是不是ipad
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+
+//#define SCREEN_WIDTH IsIOS7 ? ([UIScreen mainScreen].bounds.size.width):([UIScreen mainScreen].bounds.size.height)
+//#define SCREEN_HEIGHT IsIOS7 ? ([UIScreen mainScreen].bounds.size.height):([UIScreen mainScreen].bounds.size.width)
+
+//横屏
+#define WHITEVIEW_WIDTH IS_IPAD ? ((SCREEN_WIDTH)*0.55):((SCREEN_WIDTH)*0.55)
+#define WHITEVIEW_HEIGHT IS_IPAD ? ((SCREEN_HEIGHT)*0.6):((SCREEN_HEIGHT)*0.8)
+
+
+
+#define imageNamed(name) [UIImage imageWithContentsOfFile:[BUNDLE pathForResource:name ofType:@"png"]]
+
+
+
+
+
+
+//沙河路径
+#define Document NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject
+#define FILEPATH [Document stringByAppendingPathComponent:@"suzhu.plist"]
+#define IAP_RECEIPT_FILEPATH [Document stringByAppendingPathComponent:@"iapReceipt.plist"]
+#define COUNTARRAY [HTsingleClass defaultSingleClassArray].countArray
+#define IAP_ARRAY [HTsingleClass defaultSingleClassArray].iapReceiptArray
+#define USER_DEFAULT [NSUserDefaults standardUserDefaults]
+
+
+
+
+#import "UIView+UIViewAdditional.h"
+#import "HTBaseViewController.h"
+#import "HTBaseLabel.h"
+#import "HTBaseButton.h"
+#import "MXCommonKit.h"
+#import "HTBaseView.h"
+#import "HTprogressHUD.h"
+#import "UUID.h"
+#import "regex.h"
+#import "RSA.h"
+#import "HTgetDeviceName.h"
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+//
+//  HTloginHelp.h
+//  NewSDkBy
+//
+//  Created by 王璟鑫 on 16/1/15.
+//  Copyright © 2016年 www.gamehetu.com. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+@interface HTloginHelp : NSObject
+//注册请求封装
++(NSMutableURLRequest*)returnRequest:(NSString*)mainStr usernameTextField:(UITextField*)usernameTextField passwordTextField:(UITextField*)passwordTextField;
+
+//返回登陆主链接
++(NSString*)returnLoginString;
+
+//返回注册主链接
++(NSString*)returnSignupString;
+
+//将请求下来的json变成data
++(NSDictionary*)jsonBecomeDict:(NSData*)data;
+
+@end

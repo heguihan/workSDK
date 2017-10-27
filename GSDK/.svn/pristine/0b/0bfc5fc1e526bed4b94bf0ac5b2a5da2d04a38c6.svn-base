@@ -1,0 +1,14 @@
+//
+//  FacebookLogin.h
+//  GSDK
+//
+//  Created by 王璟鑫 on 16/8/5.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface FacebookLogin : NSObject
++(void)logInIfSuccess:(void(^)(id response, NSDictionary*FacebookDict))success failure:(void(^)(NSError*error))failure;
+
+@end

@@ -1,0 +1,8 @@
+[core]
+	bare = false
+	filemode = true
+	ignorecase = true
+	precomposeunicode = true
+	logallrefupdates = true
+[core]
+	repositoryformatversion = 0

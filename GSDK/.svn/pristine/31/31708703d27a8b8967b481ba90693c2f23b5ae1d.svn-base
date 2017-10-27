@@ -1,0 +1,288 @@
+//
+//  HTFaseLoginViewController.m
+//  GSDK
+//
+//  Created by 王璟鑫 on 16/8/4.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#import "HTFaseLoginViewController.h"
+
+#import "HTAccountController.h"
+#import "FacebookLogin.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+#import <GameKit/GameKit.h>
+@interface HTFaseLoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate>
+
+@property (nonatomic,strong) HTBaseButton*fastLoginButton;
+
+@property (nonatomic,strong) HTBaseLabel*otherLoginWayLabel;
+
+@property(strong, nonatomic) GIDSignInButton *signInButton;
+
+@property (nonatomic,strong) UIImageView*imageView;
+@end
+
+static BOOL a=NO;
+@implementation HTFaseLoginViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+   }
+
+- (void)signIn:(GIDSignIn *)signIn
+didSignInForUser:(GIDGoogleUser *)user
+     withError:(NSError *)error
+{
+    [HTprogressHUD showjuhua:self.view andText:bendihua(@"正在登录")];
+    NSString*str=[NSString stringWithFormat:@"username=%@#google&name=%@&uuid=%@&token=%@",[GIDSignIn sharedInstance].currentUser.profile.email,[GIDSignIn sharedInstance].currentUser.profile.name,[UUID getUUID],user.authentication.idToken];
+    NSString*rsaStr=[RSA encryptString:str];
+    NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
+    NSURL*url=[NSURL URLWithString:urlStr];
+    NSURLRequest*request=[NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        
+        NSDictionary*dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+        [HTprogressHUD hiddenHUD:self.view];
+        
+        if ([dict[@"code"]isEqualToNumber:@0]) {
+            NSLog(@"谷歌登录成功");
+        }else
+        {
+            
+        }
+    }];
+    [[GIDSignIn sharedInstance] signOut];
+}
+-(instancetype)init
+{
+    if (self=[super init]) {
+        [GIDSignIn sharedInstance].uiDelegate = self;
+        [GIDSignIn sharedInstance].delegate=self;
+        [self configUI];
+
+    }
+    return self;
+}
+-(void)configUI
+{
+    [self setFastLoginButton];
+    
+    [self setOtherLoginWayLabel];
+    
+    [self setOtherLoginButton];
+}
+
+-(void)setFastLoginButton
+{
+    self.fastLoginButton=[HTBaseButton newButton];
+    
+    self.fastLoginButton.frame=CGRectMake(self.mainView.width*0.1, self.naviView.height+self.mainView.height*0.15, self.mainView.width*0.8, self.mainView.height*0.2);
+    
+    [self.fastLoginButton setTitle:bendihua(@"快速登录") forState:(UIControlStateNormal)];
+    
+    self.mainView.backgroundColor=[UIColor whiteColor];
+    
+    NSLog(@"%@",self.mainView);
+    
+    self.fastLoginButton.backgroundColor=CBlueColor;
+    
+    [self.mainView addSubview:self.fastLoginButton];
+    
+    [self.fastLoginButton addTarget:self action:@selector(fastLoginAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    
+}
+-(void)fastLoginAction:(UIButton*)sender
+{
+    [HTprogressHUD showjuhua:self.view andText:bendihua(@"快速进入中")];
+    
+    //获取标识符
+    NSString *identifier = [UUID getUUID];
+    //拼接字符串
+    NSString*str=[NSString stringWithFormat:@"username=%@#device&name=%@&uuid=%@",identifier,[HTgetDeviceName deviceString],[UUID getUUID]];
+    //加密
+    NSString*rsaStr=[RSA encryptString:str];
+    //拼接加密后文件
+    NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json",[USER_DEFAULT objectForKey:@"appID"],rsaStr];
+    //创建url
+    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    //简历网络请求体
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        [HTprogressHUD hiddenHUD:self.view];
+        if (data) {
+            NSDictionary*dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+           
+            NSLog(@"%@",dict);
+            if ([dict[@"code"]isEqualToNumber:@0]) {
+                
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                
+            }else
+            {
+                UIAlertView*alert=[[UIAlertView alloc]initWithTitle:bendihua(@"温馨提示") message:bendihua(@"游客登录失败") delegate:self cancelButtonTitle:(bendihua(@"确定")) otherButtonTitles:nil];
+                [alert show];
+            }
+        }else
+        {
+            NSLog(@"%@",connectionError);
+        }
+    }];
+
+}
+-(void)setOtherLoginWayLabel
+{
+    self.otherLoginWayLabel=[[HTBaseLabel alloc]init];
+    
+    self.otherLoginWayLabel.frame=CGRectMake(self.fastLoginButton.left, self.fastLoginButton.bottom+self.mainView.height*0.1, 0, 0);
+    
+    self.otherLoginWayLabel.text=bendihua(@"其他登录方式:");
+
+    [self.otherLoginWayLabel sizeToFit];
+
+    self.otherLoginWayLabel.font=MXSetSysFont(13);
+    
+    self.otherLoginWayLabel.textAlignment=NSTextAlignmentLeft;
+    
+    [self.mainView addSubview:self.otherLoginWayLabel];
+    
+}
+-(void)setOtherLoginButton
+{
+    for (int i=0; i<4; i++) {
+        
+        HTBaseButton*button=[HTBaseButton newButton];
+        
+        button.tag=100+i;
+        
+        button.frame=CGRectMake(self.otherLoginWayLabel.right+(60*i)-30, self.otherLoginWayLabel.bottom+10, 50, 50);
+        
+        button.backgroundColor=COrangeColor;
+        
+        [self.mainView addSubview:button];
+        
+        switch (button.tag) {
+            case 100:
+            [button addTarget:self action:@selector(FaceBookLogin:) forControlEvents:(UIControlEventTouchUpInside)];
+                break;
+            case 101:
+            [button addTarget:self action:@selector(GameCenterLogin:) forControlEvents:(UIControlEventTouchUpInside)];
+                break;
+            case 102:
+            [button addTarget:self action:@selector(GoogleLogin:) forControlEvents:(UIControlEventTouchUpInside)];
+                self.signInButton=[[GIDSignInButton alloc]init];
+                self.signInButton.frame=button.bounds;
+                self.signInButton.style=2;
+                [button addSubview:self.signInButton];
+                self.imageView=[[UIImageView alloc]initWithFrame:button.bounds];
+                self.imageView.image=[UIImage imageNamed:@"1"];
+                
+                [self.signInButton addSubview:self.imageView];
+                break;
+            case 103:
+            [button addTarget:self action:@selector(AccountLogin:) forControlEvents:(UIControlEventTouchUpInside)];
+                break;
+            default:
+                break;
+        }
+        
+        
+        
+    }
+}
+
+-(void)FaceBookLogin:(HTBaseButton*)sender
+{
+    [FacebookLogin logInIfSuccess:^(id response, NSDictionary *FacebookDict) {
+        
+        
+    } failure:^(NSError *error) {
+        
+        
+    }];
+    
+}
+-(void)GameCenterLogin:(UIButton*)sender
+{
+    [self authenticateLocalPlayer];
+}
+-(void)GoogleLogin:(UIButton*)sender
+{
+    
+}
+-(void)AccountLogin:(UIButton*)sender
+{
+    HTAccountController*account=[[HTAccountController alloc]init];
+    
+    [self.navigationController pushViewController:account animated:NO];
+}
+- (void) authenticateLocalPlayer
+{
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+  static  UIViewController*con;
+    if(a)
+    {
+        a=NO;
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"gamecenter:"]];
+    }else if (localPlayer.authenticated) {
+        [HTprogressHUD showjuhua:self.view andText:bendihua(@"正在登录")];
+
+        [self gameCenterLoginConnection];
+    }else{
+        [HTprogressHUD showjuhua:self.view andText:bendihua(@"正在登录")];
+    __weak typeof (self)weakSelf = self;
+    [localPlayer setAuthenticateHandler:(^(UIViewController* viewcontroller, NSError *error) {
+        
+        if (!error && viewcontroller)
+        {
+            con=viewcontroller;
+            [weakSelf presentViewController:viewcontroller animated:YES completion:nil];
+            
+        }
+        else if (error == nil&&viewcontroller==nil) {
+
+            [self gameCenterLoginConnection];
+            
+        }else if(error) {
+            a=YES;
+            [HTprogressHUD hiddenHUD:self.view];
+            NSLog(@"error---%@",error);
+        }
+    })];
+    }
+}
+-(void)gameCenterLoginConnection
+{
+    NSString*str=[NSString stringWithFormat:@"username=%@#gameCenter&name=%@&uuid=%@",[GKLocalPlayer localPlayer].playerID,[GKLocalPlayer localPlayer].alias,[UUID getUUID]];
+    NSString*rsaStr=[RSA encryptString:str];
+    NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
+    NSURL*url=[NSURL URLWithString:urlStr];
+    NSURLRequest*request=[NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        
+        NSDictionary*dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+        
+        [HTprogressHUD hiddenHUD:self.view];
+        NSLog(@"游戏中心登录成功");
+
+        if ([dict[@"code"]isEqualToNumber:@0]) {
+        }else
+        {
+            
+        }
+    }];
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+@end

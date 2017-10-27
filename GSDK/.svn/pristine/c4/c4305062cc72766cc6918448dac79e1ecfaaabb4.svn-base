@@ -1,0 +1,13 @@
+//
+//  HTConnect.m
+//  GSDK
+//
+//  Created by 王璟鑫 on 16/8/9.
+//  Copyright © 2016年 王璟鑫. All rights reserved.
+//
+
+#import "HTConnect.h"
+
+@implementation HTConnect
+
+@end
