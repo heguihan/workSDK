@@ -3,26 +3,26 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1047879244101-ab7hk0r62dq3oqjk6jpmp6knimk4p2un.apps.googleusercontent.com</string>
+	<string>258977938472-07ue8jfdmheskpv8ircrjcpmt8p22i4g.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1047879244101-ab7hk0r62dq3oqjk6jpmp6knimk4p2un</string>
+	<string>com.googleusercontent.apps.258977938472-07ue8jfdmheskpv8ircrjcpmt8p22i4g</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.phoenix.zombie</string>
+	<string>com.phoenix.zombiesss</string>
 	<key>PROJECT_ID</key>
-	<string>firebase-gsdk</string>
+	<string>default-demo-app-dc6b4</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1047879244101:ios:b451e981adb54446</string>
+	<string>1:258977938472:ios:26e66064bdcbc303</string>
 </dict>
 </plist>

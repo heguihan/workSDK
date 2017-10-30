@@ -36,7 +36,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1047879244101-ab7hk0r62dq3oqjk6jpmp6knimk4p2un</string>
+				<string>com.googleusercontent.apps.258977938472-07ue8jfdmheskpv8ircrjcpmt8p22i4g</string>
 			</array>
 		</dict>
 	</array>
@@ -102,7 +102,6 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
-		<string>gamekit</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

@@ -57,6 +57,7 @@
 
 -(void)makeSureRevise:(HTBaseButton*)sender
 {
+//改改改aaa修改密码
     if (!self.password.text) {
         [HTAlertView showAlertViewWithText:bendihua(@"密码不能为空") com:nil];
     }else if(self.password.text.length<6||self.password.text.length>16)
@@ -73,10 +74,27 @@
     }
     else
     {
-    NSString*dataStr=[NSString stringWithFormat:@"token=%@&password=%@",USERTOKEN,self.username.text];
-        NSString*rsaStr=[RSA encryptString:dataStr];
-        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/update?app=%@&format=json&data=%@&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
-        NSURL*url=[NSURL URLWithString:urlStr];
+        // access_token, old_pwd, password
+        NSString *pram_acess_token = [USER_DEFAULT objectForKey:@"access_token"];
+        NSString *pram_old_pwd = [USER_DEFAULT objectForKey:@"password"];
+        NSString *pram_password = self.username.text;
+
+        NSString *newStr = [NSString stringWithFormat:@"access_token=%@&old_pwd=%@&password=%@",pram_acess_token, pram_old_pwd, pram_password];
+        //    NSString*str=[NSString stringWithFormat:@"username=%@#device&name=%@&uuid=%@",identifier,[HTgetDeviceName deviceString],GETUUID];
+        //    //加密
+        //    NSString*rsaStr=[RSA encryptString:str];
+        //拼接加密后文件
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, CHANGEPASSWORD_URL];
+        NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newStr];
+        
+        NSLog(@"xiugai=%@",newUrlStr);
+        
+        
+//    NSString*dataStr=[NSString stringWithFormat:@"token=%@&password=%@",USERTOKEN,self.username.text];
+//        NSString*rsaStr=[RSA encryptString:dataStr];
+//        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/update?app=%@&format=json&data=%@&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
+        
+        NSURL*url=[NSURL URLWithString:newUrlStr];
         NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url];
         [HTprogressHUD showjuhuaText:bendihua(@"正在加載")];
         [HTNetWorking sendRequest:request ifSuccess:^(id response) {

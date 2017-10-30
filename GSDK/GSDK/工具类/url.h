@@ -10,7 +10,7 @@
 #define url_h
 
 //新的域名
-#define SERVER_URL  @"https://hk.account.gamehetu.com/"
+#define SERVER_URL  @"https://hk.account.gamehetu.com"
 
 //支付的域名
 #define IAP_URL  @"https://hk.trade.gamehetu.com/"

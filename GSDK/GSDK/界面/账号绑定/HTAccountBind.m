@@ -126,6 +126,9 @@
             if ([response[@"code"] isEqualToNumber:@0]) {
       
                    [HTAddBindInfoTodict addInfoToDictType:@"email" auth_name:self.top.text];
+                [USER_DEFAULT setObject:pram_password forKey:@"password"];
+                [USER_DEFAULT synchronize];
+                
                 [HTAlertView showAlertViewWithText:bendihua(@"绑定成功") com:^{
                     
                     [self.navigationController popViewControllerAnimated:YES];

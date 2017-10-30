@@ -126,6 +126,7 @@
 //改改改aaa账号登录
          [HTprogressHUD showjuhuaText:bendihua(@"正在登录")];
         NSMutableURLRequest *request=[HTloginHelp returnRequest:[HTloginHelp returnLoginString] usernameTextField:top passwordTextField:bottom];
+        NSString *password = bottom.text;
         [HTNetWorking sendRequest:request ifSuccess:^(id response) {
            
             if ([response[@"code"] isEqualToNumber:@0]) {
@@ -139,8 +140,12 @@
                     NSLog(@"uid=%@",str);
                     [USER_DEFAULT setObject:str forKey:@"uid"];
                     //保存access_token
+                    
                     NSString *access_token = response[@"access_token"];
                     [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+                    //保存密码
+                    NSLog(@"password=%@",password);
+                    [USER_DEFAULT setObject:password forKey:@"password"];
                     [USER_DEFAULT synchronize];
                     
                  [HTConnect shareConnect].loginBackBlock(response,nil);

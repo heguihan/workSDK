@@ -69,6 +69,9 @@
 -(void)configUI
 {
     [self makeLogInNameAndImageLabel];
+    NSString *token = [USER_DEFAULT objectForKey:@"access_token"];
+    NSLog(@"token=%@",token);
+    [HTLoginSuccess loginSuccessWithtoken:token];
 }
 -(void)makeLogInNameAndImageLabel
 {

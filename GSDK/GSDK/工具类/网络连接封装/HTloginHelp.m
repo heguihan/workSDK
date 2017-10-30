@@ -13,14 +13,14 @@
 
 +(NSMutableURLRequest*)returnRequest:(NSString*)mainStr usernameTextField:(UITextField*)usernameTextField passwordTextField:(UITextField*)passwordTextField
 {
-    NSString*nameAndWord;
+//    NSString*nameAndWord;
     //主体
     NSURL*url=[NSURL URLWithString:mainStr];
 //new = username, password, app_id, uuid, adid, device, version, channel, ip(否)
-    nameAndWord=[NSString stringWithFormat:@"username=%@&password=%@&uuid=%@",usernameTextField.text,passwordTextField.text,[UUID getUUID]];
+//    nameAndWord=[NSString stringWithFormat:@"username=%@&password=%@&uuid=%@",usernameTextField.text,passwordTextField.text,[UUID getUUID]];
     
-    NSString *username = @"usernameTextField.text";
-    NSString *password = @"passwordTextField.text";
+    NSString *username = usernameTextField.text;
+    NSString *password = passwordTextField.text;
     NSString *app_id = [USER_DEFAULT objectForKey:@"appID"];
     NSString *uuid = [UUID getUUID];
     NSString *adid = [USER_DEFAULT objectForKey:@"adid"];
@@ -36,6 +36,7 @@
 //    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&data=%@&format=json&version=2.0",appId,dataStr];
 //    NSLog(@"str=%@",parmaStr);
     NSLog(@"%@",newStr);
+    NSLog(@"main=%@",mainStr);
     NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:15];
     
     [request setHTTPMethod:@"POST"];

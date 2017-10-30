@@ -149,10 +149,14 @@
 
     NSLog(@"kuaisu请求方式=%@",request.HTTPMethod);
     [HTNetWorking sendRequest:request ifSuccess:^(id response) {
-        
+//改改改aaa测试数据
         if ([response[@"code"]isEqualToNumber:@0]) {
             
             NSString *str = response[@"open_id"];
+//            NSString *str = @"123456";
+//            NSString *name = @"丹妮";
+//            NSString *access_token = @"eyJ0eXAiNiJ9.eyJzdWhY2fQ.P-b4TJ-wEsP_EjxHRr7c";
+            
             NSLog(@"uid=%@",str);
             [USER_DEFAULT setObject:str forKey:@"uid"];
             //保存access_token
@@ -165,7 +169,7 @@
             NSLog(@"name=%@",response[@"name"]);
             NSLog(@"===============分割线==================");
             
-            
+//            [HTLoginSuccess loginSuccessWithtoken:access_token];
             [HTConnect showAssistiveTouch];
             [HTNameAndRequestModel setFastRequest:request AndNameFormdict:response];
             [HTConnect shareConnect].loginBackBlock(response,nil);
@@ -333,7 +337,7 @@ didSignInForUser:(GIDGoogleUser *)user
 //        NSString*rsaStr=[RSA encryptString:str];
 //        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/login?app=%@&data=%@&format=json&version=2.0",[[NSUserDefaults standardUserDefaults]objectForKey:@"appID"],rsaStr];
         
-        
+        NSLog(@"request=%@",newUrlStr);
         NSURL*url=[NSURL URLWithString:newUrlStr];
         NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:url];
         
