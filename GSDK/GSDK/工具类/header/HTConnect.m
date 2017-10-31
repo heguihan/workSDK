@@ -78,6 +78,8 @@
 //    }];
     [HTLoginManager sharedInstance].fansUrlStr = urlstr;
     [HTLoginManager sharedInstance].isGoingOnline = isgoingOnline;
+    NSString *lang = bendihua(@"lang");
+    [USER_DEFAULT setObject:lang forKey:@"lang"];
     
 
     [FBSDKAppEvents activateApp];

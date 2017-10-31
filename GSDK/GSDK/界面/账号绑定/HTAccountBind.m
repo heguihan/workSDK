@@ -110,6 +110,7 @@
         NSString *pram_password = self.center.text;
         NSString *pramStr = [NSString stringWithFormat:@"access_token=%@&username=%@&password=%@",pram_access_token, pram_username, pram_password];
         NSString *newStr = [NSString stringWithFormat:@"%@?%@",newUrlStr,pramStr];
+        NSLog(@"bindurl=%@",newStr);
         NSURL *URL = [NSURL URLWithString:newStr];
         
 //        account/bind
@@ -123,7 +124,9 @@
         
         NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:URL];
         [HTNetWorking sendRequest:request ifSuccess:^(id response) {
+            [HTprogressHUD hiddenHUD];
             if ([response[@"code"] isEqualToNumber:@0]) {
+//                [HTprogressHUD hiddenHUD];
       
                    [HTAddBindInfoTodict addInfoToDictType:@"email" auth_name:self.top.text];
                 [USER_DEFAULT setObject:pram_password forKey:@"password"];

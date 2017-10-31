@@ -71,7 +71,7 @@
     [self makeLogInNameAndImageLabel];
     NSString *token = [USER_DEFAULT objectForKey:@"access_token"];
     NSLog(@"token=%@",token);
-    [HTLoginSuccess loginSuccessWithtoken:token];
+//    [HTLoginSuccess loginSuccessWithtoken:token];
 }
 -(void)makeLogInNameAndImageLabel
 {
@@ -94,6 +94,7 @@
 //改改改aaa显示界面
     
     NSString* textStr=showDict[@"name"];
+//    NSString *textStr = [USER_DEFAULT objectForKey:@"name"];
     NSLog(@"===============分割线===================");
     NSLog(@"name====%@",textStr);
     NSLog(@"===============分割线===================");

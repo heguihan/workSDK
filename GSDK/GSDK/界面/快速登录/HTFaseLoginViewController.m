@@ -88,7 +88,8 @@
     }
     HTBaseLabel*nameLabel=[[HTBaseLabel alloc]init];
     nameLabel.frame=CGRectMake(inforLabel.right, 0, 0, 0);
-    [nameLabel setText:[HTBindInfo returnHomeName:[USER_DEFAULT objectForKey:@"userInfo"]] font:MXSetSysFont(9) color:CRedColor sizeToFit:YES];
+    [nameLabel setText:[HTBindInfo returnHomeName:[USER_DEFAULT objectForKey:@"usernewinfo"]] font:MXSetSysFont(9) color:CRedColor sizeToFit:YES];
+//    [nameLabel setText:[USER_DEFAULT objectForKey:@"name"] font:MXSetSysFont(9) color:CRedColor sizeToFit:YES];
     nameLabel.centerY=inforLabel.centerY;
     nameLabel.width=self.mainView.width-nameLabel.left-5;
     [self.mainView addSubview:nameLabel];
@@ -103,6 +104,11 @@
 -(void)fastLoginAction:(UIButton*)sender
 {
 //改改改aaa游客登录
+    
+    NSString *lang = bendihua(@"lang");
+    NSLog(@"lang=%@",lang);
+    
+    
     NSMutableURLRequest *request;
     if ([self isFirstLogin]) {
     //获取标识符
@@ -153,23 +159,20 @@
         if ([response[@"code"]isEqualToNumber:@0]) {
             
             NSString *str = response[@"open_id"];
-//            NSString *str = @"123456";
-//            NSString *name = @"丹妮";
-//            NSString *access_token = @"eyJ0eXAiNiJ9.eyJzdWhY2fQ.P-b4TJ-wEsP_EjxHRr7c";
-            
             NSLog(@"uid=%@",str);
             [USER_DEFAULT setObject:str forKey:@"uid"];
             //保存access_token
             NSString *access_token = response[@"access_token"];
             [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+            [USER_DEFAULT setObject:response[@"name"] forKey:@"name"];
             [USER_DEFAULT synchronize];
             
             NSLog(@"===============分割线==================");
             NSLog(@"open_id=%@",str);
             NSLog(@"name=%@",response[@"name"]);
             NSLog(@"===============分割线==================");
-            
-//            [HTLoginSuccess loginSuccessWithtoken:access_token];
+            NSLog(@"token=%@",access_token);
+            [HTLoginSuccess loginSuccessWithtoken:access_token];
             [HTConnect showAssistiveTouch];
             [HTNameAndRequestModel setFastRequest:request AndNameFormdict:response];
             [HTConnect shareConnect].loginBackBlock(response,nil);
@@ -313,15 +316,19 @@ didSignInForUser:(GIDGoogleUser *)user
         
         NSString *pram_platform = @"google";
         NSString *pram_code = user.authentication.idToken;
+//        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
         NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
         NSString *pram_uuid = GETUUID;
         NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
-        NSString *pram_device = [HTgetDeviceName deviceString];
+//        NSString *pram_device = [HTgetDeviceName deviceString];
+        NSString *pram_device = @"ios";
         NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
         NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
         NSString *pram_ip = GETIP;
+        NSString *pram_open_id = [GIDSignIn sharedInstance].currentUser.profile.email;
+//        NSString *pram_
         
-        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&code=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
         
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
         
@@ -363,7 +370,7 @@ didSignInForUser:(GIDGoogleUser *)user
                 [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                 [USER_DEFAULT synchronize];
                 
-                
+                [HTLoginSuccess loginSuccessWithtoken:access_token];
                 [HTConnect shareConnect].loginBackBlock(response,googleDic);
                 [HTHUD showHUD:bendihua(@"登录成功")];
                 [HTpresentWindow dismissPresentWindow];
@@ -389,11 +396,11 @@ didSignInForUser:(GIDGoogleUser *)user
     self.login=[[HTPhoneLogin alloc]init];
     [self.login loginWithPhoneNumber:self ifSuccess:^(id data) {
         
-        NSString *str = data[@"data"][@"uid"];
-        NSLog(@"uid=%@",str);
-        
-        [USER_DEFAULT setObject:str forKey:@"uid"];
-        [USER_DEFAULT synchronize];
+//        NSString *str = data[@"data"][@"uid"];
+//        NSLog(@"uid=%@",str);
+//        
+//        [USER_DEFAULT setObject:str forKey:@"uid"];
+//        [USER_DEFAULT synchronize];
         
         
          [HTConnect shareConnect].loginBackBlock(data,nil);
@@ -482,22 +489,48 @@ didSignInForUser:(GIDGoogleUser *)user
 {
     [HTprogressHUD showjuhuaText:bendihua(@"正在登录")];
 //改改改aaa game center
-    NSString*str=[NSString stringWithFormat:@"username=%@#apple&name=%@&uuid=%@",
-                  [GKLocalPlayer localPlayer].playerID,
-                  [regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias],
-                  [UUID getUUID]];
+//    NSString*str=[NSString stringWithFormat:@"username=%@#apple&name=%@&uuid=%@",
+//                  [GKLocalPlayer localPlayer].playerID,
+//                  [regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias],
+//                  [UUID getUUID]];
+//    
+//    NSString*urlStr=[NSString stringWithFormat:@"app=%@&data=%@&format=json&version=2.0",
+//                     [USER_DEFAULT objectForKey:@"appID"],
+//                     [RSA encryptString:str]];
+//    
+//    NSString*mainStr=@"http://c.gamehetu.com/passport/login";
     
-    NSString*urlStr=[NSString stringWithFormat:@"app=%@&data=%@&format=json&version=2.0",
-                     [USER_DEFAULT objectForKey:@"appID"],
-                     [RSA encryptString:str]];
+    //platform code app_id uuid adid device version channel ip
     
-    NSString*mainStr=@"http://c.gamehetu.com/passport/login";
+    NSString *pram_platform = @"gamecenter";
+    NSString *pram_code = @"";
+    //        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+    NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+    NSString *pram_uuid = GETUUID;
+    NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
+    //        NSString *pram_device = [HTgetDeviceName deviceString];
+    NSString *pram_device = @"ios";
+    NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
+    NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
+    NSString *pram_ip = GETIP;
+    NSString *pram_open_id = [GKLocalPlayer localPlayer].playerID;
+    //        NSString *pram_
+    
+    NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
+    
+//    NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newPramStr];
+    
+    
+    
+    
     
     //這是為了保存request準備的
-    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:mainStr] cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:15];
+    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr] cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:15];
     [request setHTTPMethod:@"POST"];
     
-    NSData*paraData=[urlStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSData*paraData=[newPramStr dataUsingEncoding:NSUTF8StringEncoding];
     
     [request setHTTPBody:paraData];
     

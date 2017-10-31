@@ -80,6 +80,16 @@ didSignInForUser:(GIDGoogleUser *)user
                 
                 //切换google账号登录成功返回
                 
+                NSString *str = response[@"open_id"];
+                NSLog(@"uid=%@",str);
+                [USER_DEFAULT setObject:str forKey:@"uid"];
+                //保存access_token
+                NSString *access_token = response[@"access_token"];
+                [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+                [USER_DEFAULT synchronize];
+                
+                [HTLoginSuccess loginSuccessWithtoken:access_token];
+                
                 NSDictionary *changDic = @{@"code":@2,@"msg":@"success"};
                 [HTConnect shareConnect].changePassword(changDic);
 

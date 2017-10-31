@@ -65,8 +65,12 @@
     {
         [HTprogressHUD showjuhuaText:bendihua(@"正在发送")];
         
-        NSString*strURL=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/find?app=%@&username=%@",[USER_DEFAULT objectForKey:@"appID"],self.emailTextfield.text];
-        NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:strURL]];
+        NSString *newStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,FORGET_URL];
+        NSString *pram_account = self.emailTextfield.text;
+        NSString *newStrUrl = [NSString stringWithFormat:@"%@?%@",newStr,pram_account];
+        
+//        NSString*strURL=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/find?app=%@&username=%@",[USER_DEFAULT objectForKey:@"appID"],self.emailTextfield.text];
+        NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:newStrUrl]];
         [HTNetWorking sendRequest:request ifSuccess:^(id response) {
             
             if ([response[@"code"] isEqualToNumber:@0]) {

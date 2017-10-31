@@ -73,18 +73,20 @@
             NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
             NSString *pram_uuid = GETUUID;
             NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
-            NSString *pram_device = [HTgetDeviceName deviceString];
+//            NSString *pram_device = [HTgetDeviceName deviceString];
+            NSString *pram_device = @"ios";
             NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
             NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
             NSString *pram_ip = GETIP;
+            NSString *pram_open_id = [accessToken accountID];
             
-            NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&code=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+            NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
             
             NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
             
             NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newPramStr];
             
-            
+            NSLog(@"acc=%@",newUrlStr);
             
 //            NSString*dataStr=[NSString stringWithFormat:@"username=%@#accountkit&token=%@&uuid=%@&name=%@",[accessToken accountID],[accessToken tokenString],GETUUID,phoneNum];
 //            //加密
@@ -107,9 +109,10 @@
                 //保存access_token
                 NSString *access_token = response[@"access_token"];
                 [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+                [USER_DEFAULT setObject: [accessToken tokenString] forKey:@"accountkitToken"];
                 [USER_DEFAULT synchronize];
                 
-                
+                [HTLoginSuccess loginSuccessWithtoken:access_token];
                 
                  [HTConnect showAssistiveTouch];
                  [HTNameAndRequestModel setFastRequest:request AndNameFormdict:response];

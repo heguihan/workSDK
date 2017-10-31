@@ -16,8 +16,10 @@
 #define IAP_URL  @"https://hk.trade.gamehetu.com/"
 
 //忘记密码
+#define FORGET_URL  @"/public/forget"
 
-
+//支付回调
+#define APPLE_URL  @"/notify/apple"
 
 //统计接口
 #define STATS_URL  @"/stats/login"

@@ -285,16 +285,27 @@
 ///改改改aaa支付订单
     NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/order/notice/apple?"];
     
+    NSString *newStr = [NSString stringWithFormat:@"%@%@",IAP_URL, APPLE_URL];
+    NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+    NSString *pram_user_id = [USER_DEFAULT objectForKey:@"uid"];
+    NSString *coo_server = [USER_DEFAULT objectForKey:@"coo_server"];
+    NSString *coo_uid = [USER_DEFAULT objectForKey:@"coo_uid"];
+    NSString *pram_custom = [NSString stringWithFormat:@"%@-%@",coo_server,coo_uid];
+    NSString *pram_receipt = receipt;
+    NSString *newPramSTr = [NSString stringWithFormat:@"app_id=%@&user_id=%@&custom=%@&receipt=%@",pram_app_id,pram_user_id, pram_custom, pram_receipt];
+    
+    
 //    NSURL*url=[NSURL URLWithString:string];
-    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&uid=%@&coo_server=%@&coo_uid=%@&extra=%@&receipt=%@",[USER_DEFAULT objectForKey:@"appID"],[USER_DEFAULT objectForKey:@"uid"],[USER_DEFAULT objectForKey:@"coo_server"],[USER_DEFAULT objectForKey:@"coo_uid"],[USER_DEFAULT objectForKey:@"extra"],receipt];
+//    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&uid=%@&coo_server=%@&coo_uid=%@&extra=%@&receipt=%@",[USER_DEFAULT objectForKey:@"appID"],[USER_DEFAULT objectForKey:@"uid"],[USER_DEFAULT objectForKey:@"coo_server"],[USER_DEFAULT objectForKey:@"coo_uid"],[USER_DEFAULT objectForKey:@"extra"],receipt];
     
     
     //测试用的
 //    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&uid=%@&coo_server=%@&coo_uid=%@&extra=%@&receipt=%@",[USER_DEFAULT objectForKey:@"appID"],@"123456",[USER_DEFAULT objectForKey:@"coo_server"],[USER_DEFAULT objectForKey:@"coo_uid"],[USER_DEFAULT objectForKey:@"extra"],receipt];
     
-    NSString *urlstr = [NSString stringWithFormat:@"%@%@",string,parmaStr];
-    NSLog(@"url==%@",urlstr);
-    NSURL *newUrl = [NSURL URLWithString:urlstr];
+//    NSString *urlstr = [NSString stringWithFormat:@"%@%@",string,parmaStr];
+    NSString *newUrlstr = [NSString stringWithFormat:@"%@%@",newStr,newPramSTr];
+    NSLog(@"url==%@",newUrlstr);
+    NSURL *newUrl = [NSURL URLWithString:newUrlstr];
     
 //    NSLog(@"urlstr=%@",parmaStr);
     NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:newUrl cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:10];
@@ -335,14 +346,29 @@
 {
     
 //改改改aaa支付订单重发
-    NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/order/notice/apple?"];
+//    NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/order/notice/apple?"];
 //    NSURL*url=[NSURL URLWithString:string];
-    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&uid=%@&coo_server=%@&coo_uid=%@&extra=%@&receipt=%@",[USER_DEFAULT objectForKey:@"appID"],[USER_DEFAULT objectForKey:@"uid"],[USER_DEFAULT objectForKey:@"coo_server"],[USER_DEFAULT objectForKey:@"coo_uid"],[USER_DEFAULT objectForKey:@"extra"],receipt];
     
+    NSString *newStr = [NSString stringWithFormat:@"%@%@",IAP_URL, APPLE_URL];
+    NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+    NSString *pram_user_id = [USER_DEFAULT objectForKey:@"uid"];
+    NSString *coo_server = [USER_DEFAULT objectForKey:@"coo_server"];
+    NSString *coo_uid = [USER_DEFAULT objectForKey:@"coo_uid"];
+    NSString *pram_custom = [NSString stringWithFormat:@"%@-%@",coo_server,coo_uid];
+    NSString *pram_receipt = receipt;
+    NSString *newPramSTr = [NSString stringWithFormat:@"app_id=%@&user_id=%@&custom=%@&receipt=%@",pram_app_id,pram_user_id, pram_custom, pram_receipt];
     
-    NSString *urlstr = [NSString stringWithFormat:@"%@%@",string,parmaStr];
-    NSLog(@"url==%@",urlstr);
-    NSURL *newUrl = [NSURL URLWithString:urlstr];
+
+    NSString *newUrlstr = [NSString stringWithFormat:@"%@%@",newStr,newPramSTr];
+    NSLog(@"url==%@",newUrlstr);
+    NSURL *newUrl = [NSURL URLWithString:newUrlstr];
+    
+//    NSString*parmaStr=[NSString stringWithFormat:@"app=%@&uid=%@&coo_server=%@&coo_uid=%@&extra=%@&receipt=%@",[USER_DEFAULT objectForKey:@"appID"],[USER_DEFAULT objectForKey:@"uid"],[USER_DEFAULT objectForKey:@"coo_server"],[USER_DEFAULT objectForKey:@"coo_uid"],[USER_DEFAULT objectForKey:@"extra"],receipt];
+//    
+//    
+//    NSString *urlstr = [NSString stringWithFormat:@"%@%@",string,parmaStr];
+//    NSLog(@"url==%@",urlstr);
+//    NSURL *newUrl = [NSURL URLWithString:urlstr];
     
     //    NSLog(@"urlstr=%@",parmaStr);
     NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:newUrl cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:5];

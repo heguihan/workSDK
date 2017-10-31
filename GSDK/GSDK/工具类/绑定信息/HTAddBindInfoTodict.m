@@ -12,30 +12,30 @@
 +(void)addInfoToDictType:(NSString*)type auth_name:(NSString*)auth_name
 {
 //改改改aaa绑定过后的信息存储
-    NSMutableDictionary*dict=[NSMutableDictionary dictionaryWithDictionary:[USER_DEFAULT objectForKey:@"userInfo"]];
+    NSMutableDictionary*dict=[NSMutableDictionary dictionaryWithDictionary:[USER_DEFAULT objectForKey:@"usernewinfo"]];
     NSMutableDictionary*addDcit;
     if ([type isEqualToString:@"email"]) {
-        addDcit=[NSMutableDictionary dictionaryWithObject:auth_name forKey:@"auth_id"];
+        addDcit=[NSMutableDictionary dictionaryWithObject:auth_name forKey:@"open_name"];
 
     }else
     {
     
-    addDcit=[NSMutableDictionary dictionaryWithObject:auth_name forKey:@"auth_name"];
+    addDcit=[NSMutableDictionary dictionaryWithObject:auth_name forKey:@"open_name"];
     }
     
-    NSMutableDictionary*mudic=[NSMutableDictionary dictionaryWithDictionary:[dict valueForKeyPath:@"data.bind"]];
+    NSMutableDictionary*mudic=[NSMutableDictionary dictionaryWithDictionary:[dict valueForKeyPath:@"more"]];
     [mudic setObject:addDcit forKey:type];
 
     
-    NSMutableDictionary*dataDict=[NSMutableDictionary dictionaryWithDictionary:dict[@"data"]];
-    [dataDict setObject:mudic forKey:@"bind"];
+//    NSMutableDictionary*dataDict=[NSMutableDictionary dictionaryWithDictionary:dict[@"data"]];
+//    [dataDict setObject:mudic forKey:@"bind"];
     
-    [dict setObject:dataDict forKey:@"data"];
+    [dict setObject:mudic forKey:@"more"];
 //真你妈比费劲握草!!!!!!!!
     
-    [USER_DEFAULT setObject:dict forKey:@"userInfo"];
+    [USER_DEFAULT setObject:dict forKey:@"usernewinfo"];
     [USER_DEFAULT synchronize];
-    NSLog(@"%@",[USER_DEFAULT objectForKey:@"userInfo"]);
+    NSLog(@"%@",[USER_DEFAULT objectForKey:@"usernewinfo"]);
     
 }
 @end

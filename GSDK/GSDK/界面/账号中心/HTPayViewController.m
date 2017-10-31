@@ -27,7 +27,7 @@
 -(void)configUI
 {
 //    self.navigationItem.rightBarButtonItem=anotherButton;
-    
+//改改改aaa第三方支付
     
     CGRect frame = CGRectMake(0, 70/550.0*MAINVIEW_WIDTH, self.mainView.bounds.size.width, self.mainView.bounds.size.height - 70/550.0*MAINVIEW_WIDTH);
     self.webview=[[UIWebView alloc]initWithFrame:frame];
@@ -43,8 +43,10 @@
         NSString *uid = [USER_DEFAULT objectForKey:@"uid"];
         NSString *coo_server = [USER_DEFAULT objectForKey:@"coo_server"];
         NSString *coo_uid = [USER_DEFAULT objectForKey:@"coo_uid"];
-        
-        urlStr = [NSString stringWithFormat:@"http://c.gamehetu.com/pay?app=%@&uid=%@&coo_server=%@&coo_uid=%@",appid,uid,coo_server,coo_uid];
+        NSString *custom = [NSString stringWithFormat:@"%@-%@",coo_server,coo_uid];
+//        https://hk.trade.gamehetu.com/trade?app_id=1001008&user_id=32434&custom=2001-3434444
+//        urlStr = [NSString stringWithFormat:@"http://c.gamehetu.com/pay?app=%@&uid=%@&coo_server=%@&coo_uid=%@",appid,uid,coo_server,coo_uid];
+        urlStr = [NSString stringWithFormat:@" https://hk.trade.gamehetu.com/trade?app——id=%@&user_id=%@&custom=%@",appid,uid,custom];
     
         NSLog(@"urlstr=%@",urlStr);
         NSLog(@"OK");

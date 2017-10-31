@@ -33,7 +33,7 @@
     NSString *fansUrl = @"https://www.facebook.com/lord.of.dark.tw/";
     [HTConnect initSDKwithAppID:@"10113" andPhoneCountryNumber:@"86" andAudit:YES andFansUel:fansUrl andVersion:@"1.0" andChannel:@"default"];
     //google
-    [GIDSignIn sharedInstance].clientID = @"258977938472-07ue8jfdmheskpv8ircrjcpmt8p22i4g.apps.googleusercontent.com";
+    [GIDSignIn sharedInstance].clientID = @"1047879244101-ab7hk0r62dq3oqjk6jpmp6knimk4p2un.apps.googleusercontent.com";
     //统计接口
     [HTConnect StatisticsInterfacelogOrRegType:@"log"  coo_server:@"200" coo_uid:@"11" success:^(id response) {
         

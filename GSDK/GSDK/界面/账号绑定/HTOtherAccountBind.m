@@ -108,13 +108,14 @@
 //    待定
     self.phone=[[HTPhoneLogin alloc]init];
    [self.phone loginWithPhoneNumber:self ifSuccess:^(id data) {
+       
        NSString*appID=[USER_DEFAULT objectForKey:@"appID"];
        NSDictionary*userDic = [USER_DEFAULT objectForKey:@"userInfo"];
        
        NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
-       NSString *pram_access_token =[userDic valueForKeyPath:@"data.token"];
-       NSString *pram_platform = @"google";
-       NSString *pram_code = @"待定";
+       NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
+       NSString *pram_platform = @"accountkit";
+       NSString *pram_code = [USER_DEFAULT objectForKey:@"accountkitToken"];
        NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
        NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
        
@@ -166,7 +167,7 @@ didSignInForUser:(GIDGoogleUser *)user
         NSDictionary*userDic = [USER_DEFAULT objectForKey:@"userInfo"];
         
         NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
-        NSString *pram_access_token =[userDic valueForKeyPath:@"data.token"];
+        NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
         NSString *pram_platform = @"google";
         NSString *pram_code = user.authentication.idToken;
         NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
@@ -269,10 +270,21 @@ didSignInForUser:(GIDGoogleUser *)user
     
         NSString*appID=[USER_DEFAULT objectForKey:@"appID"];
         NSDictionary*userDic = [USER_DEFAULT objectForKey:@"userInfo"];
-    NSString*dataStr=[NSString stringWithFormat:@"type=apple&auth=%@&name=%@&token=%@",[GKLocalPlayer localPlayer].playerID,
-                      [regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias],[userDic valueForKeyPath:@"data.token"]];
-        NSString*RSADataStr=[RSA encryptString:dataStr];
-        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/bind?app=%@&data=%@&format=json&version=2.0",appID,RSADataStr];
+//    NSString*dataStr=[NSString stringWithFormat:@"type=apple&auth=%@&name=%@&token=%@",[GKLocalPlayer localPlayer].playerID,
+//                      [regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias],[userDic valueForKeyPath:@"data.token"]];
+//        NSString*RSADataStr=[RSA encryptString:dataStr];
+//        NSString*urlStr=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/bind?app=%@&data=%@&format=json&version=2.0",appID,RSADataStr];
+    
+    
+    NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
+    NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
+    NSString *pram_platform = @"gamecenter";
+    NSString *pram_code = @"";
+    NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+    NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
+
+    
+    
         NSURL*url=[NSURL URLWithString:urlStr];
         NSMutableURLRequest*requestq=[NSMutableURLRequest requestWithURL:url];
         [HTNetWorking sendRequest:requestq ifSuccess:^(id response) {

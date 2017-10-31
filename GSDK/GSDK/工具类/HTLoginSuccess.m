@@ -26,6 +26,11 @@
         NSLog(@"success=");
         if ([response[@"code"]isEqualToNumber:@0]){
             NSLog(@"success=%@",response);
+            
+            
+            [USER_DEFAULT setObject:response[@"name"] forKey:@"name"];
+            [USER_DEFAULT setObject:response forKey:@"usernewinfo"];
+            [USER_DEFAULT synchronize];
         }else
         {
             NSLog(@"what=%@",response);

@@ -147,6 +147,7 @@
                     NSLog(@"password=%@",password);
                     [USER_DEFAULT setObject:password forKey:@"password"];
                     [USER_DEFAULT synchronize];
+                    [HTLoginSuccess loginSuccessWithtoken:access_token];
                     
                  [HTConnect shareConnect].loginBackBlock(response,nil);
                     
@@ -156,7 +157,18 @@
                    //切换账号
                     if ([HTConnect shareConnect].changeAccount) {
                         
+                        NSString *str = response[@"open_id"];
+                        NSLog(@"uid=%@",str);
+                        [USER_DEFAULT setObject:str forKey:@"uid"];
+                        //保存access_token
                         
+                        NSString *access_token = response[@"access_token"];
+                        [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+                        //保存密码
+                        NSLog(@"password=%@",password);
+                        [USER_DEFAULT setObject:password forKey:@"password"];
+                        [USER_DEFAULT synchronize];
+                        [HTLoginSuccess loginSuccessWithtoken:access_token];
                         
                         NSDictionary *changDic = @{@"code":@2,@"msg":@"success"};
                         [HTConnect shareConnect].changePassword(changDic);
