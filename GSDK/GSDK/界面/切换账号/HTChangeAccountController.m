@@ -140,7 +140,7 @@
                     NSLog(@"uid=%@",str);
                     [USER_DEFAULT setObject:str forKey:@"uid"];
                     //保存access_token
-                    
+                    [USER_DEFAULT setObject:@"10" forKey:@"loginway"];
                     NSString *access_token = response[@"access_token"];
                     [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                     //保存密码
@@ -166,6 +166,7 @@
                         [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                         //保存密码
                         NSLog(@"password=%@",password);
+                        [USER_DEFAULT setObject:@"10" forKey:@"loginway"];
                         [USER_DEFAULT setObject:password forKey:@"password"];
                         [USER_DEFAULT synchronize];
                         [HTLoginSuccess loginSuccessWithtoken:access_token];
@@ -182,19 +183,22 @@
                     [HTpresentWindow dismissPresentWindow];
                     [HTConnect showAssistiveTouch];
                 
-        }else if ([response[@"code"]isEqualToNumber:@40101]){
-            
-            [HTAlertView showAlertViewWithText:bendihua(@"用户名或密码为空") com:nil];
-            [HTprogressHUD hiddenHUD];
-            
-        }else if ([response[@"code"]isEqualToNumber:@40105])
+        }
+//            else if ([response[@"code"]isEqualToNumber:@40101]){
+//            
+//            [HTAlertView showAlertViewWithText:bendihua(@"用户名或密码为空") com:nil];
+//            [HTprogressHUD hiddenHUD];
+//            
+//        }else if ([response[@"code"]isEqualToNumber:@40105])
+//         {
+//             [HTAlertView showAlertViewWithText:bendihua(@"用户名或密码错误") com:nil];
+//             [HTprogressHUD hiddenHUD];
+//
+//         }
+        else
          {
-             [HTAlertView showAlertViewWithText:bendihua(@"用户名或密码错误") com:nil];
-             [HTprogressHUD hiddenHUD];
-
-         }else
-         {
-             [HTAlertView showAlertViewWithText:bendihua(@"登录失败") com:nil];
+//             [HTAlertView showAlertViewWithText:bendihua(@"登录失败") com:nil];
+             [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
              [HTprogressHUD hiddenHUD];
          }
             

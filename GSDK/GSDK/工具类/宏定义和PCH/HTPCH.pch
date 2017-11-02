@@ -3,6 +3,10 @@
 //获取设备版本号
 #define IsIOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] <8.0 ? YES : NO)
 
+
+#define NSLog(...) NSLog(__VA_ARGS__)
+
+
 //判断是不是ipad
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define SCREEN_WIDTH (IsIOS7 ? ([UIScreen mainScreen].bounds.size.height):([UIScreen mainScreen].bounds.size.width))

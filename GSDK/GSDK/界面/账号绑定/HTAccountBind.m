@@ -108,7 +108,8 @@
         NSString *pram_access_token = [USER_DEFAULT objectForKey:@"access_token"];
         NSString *pram_username = self.top.text;
         NSString *pram_password = self.center.text;
-        NSString *pramStr = [NSString stringWithFormat:@"access_token=%@&username=%@&password=%@",pram_access_token, pram_username, pram_password];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+        NSString *pramStr = [NSString stringWithFormat:@"access_token=%@&username=%@&password=%@&lang=%@",pram_access_token, pram_username, pram_password, pram_lang];
         NSString *newStr = [NSString stringWithFormat:@"%@?%@",newUrlStr,pramStr];
         NSLog(@"bindurl=%@",newStr);
         NSURL *URL = [NSURL URLWithString:newStr];
@@ -139,16 +140,18 @@
 
             }else if([response[@"code"]isEqualToNumber:@1])
             {
-                if ([response[@"msg"]isEqualToString:@"failed, the user is exist"]) {
-                    [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,邮箱已被绑定") com:nil];
-                }else
-                {
-                    [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,设备或账号已被绑定过") com:nil];
-                }
+                [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
+//                if ([response[@"msg"]isEqualToString:@"failed, the user is exist"]) {
+//                    [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,邮箱已被绑定") com:nil];
+//                }else
+//                {
+//                    [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,设备或账号已被绑定过") com:nil];
+//                }
             
         }else
         {
-            [HTAlertView showAlertViewWithText:bendihua(@"绑定失败") com:nil];
+//            [HTAlertView showAlertViewWithText:bendihua(@"绑定失败") com:nil];
+            [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
 
             }
         }

@@ -29,11 +29,11 @@
      fromViewController:[UIApplication sharedApplication].keyWindow.rootViewController     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
          [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelAlert+1;
          if (error) {
-             NSLog(@"Process error");
+   
              [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelAlert+1;
              failure(error);
          } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
+   
             [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelAlert+1;
          } else {
              NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -64,8 +64,12 @@
         NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
         NSString *pram_ip = GETIP;
         NSString *pram_open_id = result[@"id"];
+        NSString *open_name = result[@"name"];
+        NSString *pram_open_name = [open_name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
         
-        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        
+        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&open_name=%@&lang=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip,pram_open_name, pram_lang];
         
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
         
@@ -94,6 +98,8 @@
                 //保存access_token
                 NSString *access_token = response[@"access_token"];
                 [USER_DEFAULT setObject:[FBSDKAccessToken currentAccessToken].tokenString forKey:@"facebookToken"];
+                [USER_DEFAULT setObject:result[@"name"] forKey:@"showname"];
+                [USER_DEFAULT setObject:@"30" forKey:@"loginway"];
                 [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                 [USER_DEFAULT synchronize];
                 
@@ -155,10 +161,11 @@
                     
                     //新的接口
                     NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
-                    NSString *pram_access_token =[userDic valueForKeyPath:@"data.token"];
+                    NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
                     NSString *pram_platform = @"facebook";
                     NSString *pram_code = [USER_DEFAULT objectForKey:@"facebookToken"];
-                    NSString *newPramStr = [NSString stringWithFormat:@"ccess_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+                    NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+                    NSString *newPramStr = [NSString stringWithFormat:@"ccess_token=%@&platform=%@&code=%@&lang=%@",pram_access_token, pram_platform, pram_code, pram_lang];
                     NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
                     
 //                     NSString*dataStr=[NSString stringWithFormat:@"type=facebook&auth=%@&name=%@&token=%@",result[@"id"],result[@"name"],[userDic valueForKeyPath:@"data.token"]];
@@ -177,6 +184,7 @@
                          
                          }else if([response[@"code"] isEqualToNumber:@1])
                          {
+                             [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
                              [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
                              
                          }else

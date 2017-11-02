@@ -28,8 +28,9 @@
     NSString *version = [USER_DEFAULT objectForKey:@"version"];
     NSString *channel = [USER_DEFAULT objectForKey:@"channel"];
     NSString *ip = GETIP;
+    NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
     
-    NSString *newStr = [NSString stringWithFormat:@"username=%@&password=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",username, password,app_id, uuid, adid, device, version, channel, ip];
+    NSString *newStr = [NSString stringWithFormat:@"username=%@&password=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&lang=%@",username, password,app_id, uuid, adid, device, version, channel, ip, pram_lang];
 //    //将获取的信息加密
 //    NSString*dataStr=[RSA encryptString:nameAndWord];
 //    NSString*appId=[USER_DEFAULT objectForKey:@"appID"];

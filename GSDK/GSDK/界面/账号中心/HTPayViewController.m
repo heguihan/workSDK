@@ -46,8 +46,8 @@
         NSString *custom = [NSString stringWithFormat:@"%@-%@",coo_server,coo_uid];
 //        https://hk.trade.gamehetu.com/trade?app_id=1001008&user_id=32434&custom=2001-3434444
 //        urlStr = [NSString stringWithFormat:@"http://c.gamehetu.com/pay?app=%@&uid=%@&coo_server=%@&coo_uid=%@",appid,uid,coo_server,coo_uid];
-        urlStr = [NSString stringWithFormat:@" https://hk.trade.gamehetu.com/trade?app——id=%@&user_id=%@&custom=%@",appid,uid,custom];
-    
+        urlStr = [NSString stringWithFormat:@" https://hk.trade.gamehetu.com/trade?app_id=%@&user_id=%@&custom=%@",appid,uid,custom];
+//        urlStr = @"http://www.baidu.com";
         NSLog(@"urlstr=%@",urlStr);
         NSLog(@"OK");
 //                urlStr=@"http://c.gamehetu.com/pay?app=100008&uid=1363146&coo_server=9006&coo_uid=64";
@@ -73,14 +73,6 @@
     return self;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

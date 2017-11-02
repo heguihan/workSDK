@@ -152,7 +152,7 @@ typedef enum {
 
                 [UIView animateWithDuration:0.3 animations:^{
                     
-                    self.buttobnView.width=-self.height*5;                 //动画方式
+                    self.buttobnView.width=-self.height*4;                 //动画方式
                     self.buttobnView.left=self.height+3;
                 }];
                 
@@ -163,7 +163,7 @@ typedef enum {
 
                 [UIView animateWithDuration:0.3 animations:^{
 
-                    self.buttobnView.width=self.height*5;
+                    self.buttobnView.width=self.height*4;
                     self.buttobnView.left=-3-self.height*5;
                     
                 }completion:^(BOOL finished) {
@@ -259,9 +259,9 @@ typedef enum {
         _buttobnView=[[UIView alloc]init];
         _buttobnView.backgroundColor=[UIColor blackColor];
         [_buttobnView setCorner:self.height/2];
-        for (int i=0; i<4; i++) {
-            NSArray*imageArray=@[imageNamed(@"账号中心"),imageNamed(@"联系客服"),imageNamed(@"粉丝页"),imageNamed(@"第三方支付")];
-            NSArray*nameArray=@[bendihua(@"账号中心"),bendihua(@"联系客服"),bendihua(@"粉丝页"),bendihua(@"优惠储值")];
+        for (int i=0; i<3; i++) {
+            NSArray*imageArray=@[imageNamed(@"账号中心"),imageNamed(@"粉丝页"),imageNamed(@"第三方支付")];
+            NSArray*nameArray=@[bendihua(@"账号中心"),bendihua(@"粉丝页"),bendihua(@"优惠储值")];
             HTCustomButtonView*butt=[[HTCustomButtonView alloc]init];
             butt.frame=CGRectMake(self.height/2+self.height*i, 0, self.height, self.height);
             butt.buttonImage=[[UIImageView alloc]init];
@@ -295,12 +295,12 @@ typedef enum {
         HTBaseNavigationController*navi=[[HTBaseNavigationController alloc]initWithRootViewController:account];
         [HTpresentWindow sharedInstance].rootViewController=navi;
         
-    }else if (sender.view.tag==101)
+    }else if (sender.view.tag==101111)
     {
         HTTalkToServer*talk=[[HTTalkToServer alloc]init];
         HTBaseNavigationController*navi=[[HTBaseNavigationController alloc]initWithRootViewController:talk];
         [HTpresentWindow sharedInstance].rootViewController=navi;
-    }else if (sender.view.tag==102)
+    }else if (sender.view.tag==101)
     {
         [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelNormal;
 

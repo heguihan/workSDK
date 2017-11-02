@@ -81,19 +81,73 @@
     
     UIImage*qudaoImage;
     NSString*leftStr;
-    if ([[showDict allKeys] containsObject:@"image"])
+    NSString* textStr;
+    
+    NSString *loninway = [USER_DEFAULT objectForKey:@"loginway"];
+    NSInteger num = [loninway integerValue];
+    NSLog(@"numsss=%ld",(long)num);
+    NSInteger newNum = num / 10;
+    if (newNum == 1) {
+        //官方账号登录
+        qudaoImage = imageNamed(@"渠道图标_4");
+        textStr=showDict[@"name"];
+    }else if (newNum == 3)
     {
-        qudaoImage=showDict[@"image"];
-        
+
+        if (num==30) {
+            //face
+            qudaoImage = imageNamed(@"渠道图标_1");
+        }else if (num==31)
+        {
+            //google
+            qudaoImage = imageNamed(@"渠道图标_3");
+        }else if (num == 32)
+        {
+            //GameCenter
+            qudaoImage = imageNamed(@"渠道图标_2");
+        }else
+        {
+            //accountkit
+            qudaoImage = imageNamed(@"手机登录");
+        }
+        textStr = [USER_DEFAULT objectForKey:@"showname"];
     }else
     {
-
+        //设备登录
+        if (showDict.count == 0) {
             leftStr=bendihua(@"游客账号:");
-
+        }else if ([[showDict allKeys] containsObject:@"image"])
+        {
+            qudaoImage=showDict[@"image"];
+            
+        }else
+        {
+            
+            leftStr=bendihua(@"游客账号:");
+            
+        }
+            textStr=showDict[@"name"];
     }
+    
+    
+
+    
+    
+//    if (showDict.count == 0) {
+//        leftStr=bendihua(@"游客账号:");
+//    }else if ([[showDict allKeys] containsObject:@"image"])
+//    {
+//        qudaoImage=showDict[@"image"];
+//        
+//    }else
+//    {
+//
+//            leftStr=bendihua(@"游客账号:");
+//
+//    }
 //改改改aaa显示界面
     
-    NSString* textStr=showDict[@"name"];
+     textStr=showDict[@"name"];
 //    NSString *textStr = [USER_DEFAULT objectForKey:@"name"];
     NSLog(@"===============分割线===================");
     NSLog(@"name====%@",textStr);
@@ -148,7 +202,7 @@
         [self.topBackView.rightButton setTitle:bendihua(@"点击绑定") forState:(UIControlStateNormal)];
     }
      [self.topBackView.rightButton addTarget:self action:@selector(accountBind:) forControlEvents:(UIControlEventTouchUpInside)];
-    self.topBackView.leftLabel.text=bendihua(@"已绑定");
+    self.topBackView.leftLabel.text=bendihua(@"官方账号");
     [self.topBackView.rightButton setBackgroundColor:CRedColor];
     [self.mainView addSubview:self.topBackView];
     
@@ -157,7 +211,7 @@
         if (!self.centerLabel) {
             self.centerLabel=[[HTBaseLabel alloc]init];
         }
-        [self.centerLabel setText:bendihua(@"绑定官方账号,获得价值10$大礼包") font:MXSetSysFont(9) color:CRedColor sizeToFit:YES];
+//        [self.centerLabel setText:bendihua(@"绑定官方账号,获得价值10$大礼包") font:MXSetSysFont(9) color:CRedColor sizeToFit:YES];
         self.centerLabel.left=self.topBackView.left;
         self.centerLabel.centerY=self.topBackView.bottom+22/400.0*MAINVIEW_HEIGHT;
         [self.mainView addSubview:self.centerLabel];
@@ -180,21 +234,40 @@
         [self.bottomBackView.rightButton setBackgroundColor:MXRGBColor(136, 136, 136)];
     }else
     {
-        NSDictionary*dict=[USER_DEFAULT objectForKey:@"userInfo"];
-        NSArray*arr=[[dict valueForKeyPath:@"data.bind"] allKeys];
-        self.bottomBackView.centerLabel.text=bendihua(@"未绑定");
-
-        if ([arr containsObject:@"email"]||arr.count==0) {
+        NSDictionary*dict=[USER_DEFAULT objectForKey:@"usernewinfo"];
+        NSDictionary *dicc = dict[@"more"];
+        if (dicc.count == 0) {
+//            [self.bottomBackView.rightButton setTitle:bendihua(@"未绑定") forState:(UIControlStateNormal)];
+//            [self.bottomBackView.rightButton setBackgroundColor:MXRGBColor(136, 136, 136)];
+            self.bottomBackView.centerLabel.text=bendihua(@"未绑定");
+            
+            [self.bottomBackView.rightButton setTitle:bendihua(@"点击绑定") forState:(UIControlStateNormal)];
+            [self.bottomBackView.rightButton addTarget:self action:@selector(otherAccountBind:) forControlEvents:(UIControlEventTouchUpInside)];
+            [self.bottomBackView.rightButton setBackgroundColor:CGreenColor];
+            
+        }else if ([[dicc allKeys] containsObject:@"email"]&&dicc.count==1){
+//            NSArray*arr=[dicc allKeys];
             [self.bottomBackView.rightButton setTitle:bendihua(@"未绑定") forState:(UIControlStateNormal)];
             [self.bottomBackView.rightButton setBackgroundColor:MXRGBColor(136, 136, 136)];
+            self.bottomBackView.centerLabel.text=bendihua(@"未绑定");
+        }
 
-        }else
+//        self.bottomBackView.centerLabel.text=bendihua(@"未绑定");
+//
+//        if ([arr containsObject:@"email"]||arr.count==0) {
+//            [self.bottomBackView.rightButton setTitle:bendihua(@"未绑定") forState:(UIControlStateNormal)];
+//            [self.bottomBackView.rightButton setBackgroundColor:MXRGBColor(136, 136, 136)];
+//
+//        }
+        else
         {
         
-    [self.bottomBackView.rightButton setTitle:bendihua(@"点击绑定") forState:(UIControlStateNormal)];
-    [self.bottomBackView.rightButton addTarget:self action:@selector(otherAccountBind:) forControlEvents:(UIControlEventTouchUpInside)];
+            [self.bottomBackView.rightButton setTitle:bendihua(@"点击绑定") forState:(UIControlStateNormal)];
+            [self.bottomBackView.rightButton addTarget:self action:@selector(otherAccountBind:) forControlEvents:(UIControlEventTouchUpInside)];
         [self.bottomBackView.rightButton setBackgroundColor:CGreenColor];
         }
+        
+    
     }
     [self.mainView addSubview:self.bottomBackView];
     

@@ -205,8 +205,9 @@
     else
     {
         [HTprogressHUD showjuhuaText:@"正在提交"];
+//改改改aaa问题提交
         
-    NSDictionary*para=@{@"token":USERTOKEN,@"category":self.seleceID,@"zone":[USER_DEFAULT objectForKey:@"coo_server"],@"title":self.textView.text,@"email":self.emailTextField.text};
+    NSDictionary*para=@{@"token":[USER_DEFAULT objectForKey:@"access_token"],@"category":self.seleceID,@"zone":[USER_DEFAULT objectForKey:@"coo_server"],@"title":self.textView.text,@"email":self.emailTextField.text};
 
     [HTPOSTImageArray postRequestWithURL:[NSString stringWithFormat:@"http://aq.gamehetu.com/%@/topic/create",[USER_DEFAULT objectForKey:@"appID"]] postParems:para picArray:self.imageArray success:^(id data) {
         

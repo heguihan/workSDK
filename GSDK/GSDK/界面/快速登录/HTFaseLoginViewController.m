@@ -47,7 +47,7 @@
         self.backImageView.image=imageNamed(@"底板_1");
         self.backImageView.frame=self.mainView.bounds;
         self.titleLabel.text=@"登录";
-        
+        self.view.backgroundColor = [UIColor orangeColor];
         [self configUI];
 }
     return self;
@@ -117,13 +117,16 @@
         
     // app_id, uuid, adid, device, version, channel, ip
         NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
-        NSString *pram_uuid = GETUUID;
+//        NSString *pram_uuid = GETUUID;
+        NSString *pram_uuid = @"sskasfjdfakfahhdsadjksajlajsdljaskljal";
         NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
         NSString *pram_device = [HTgetDeviceName deviceString];
         NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
         NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
         NSString *pram_ip = GETIP;
-        NSString *newStr = [NSString stringWithFormat:@"app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+        NSString *newStr = [NSString stringWithFormat:@"app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&lang=%@",pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip, pram_lang];
+        
 //    NSString*str=[NSString stringWithFormat:@"username=%@#device&name=%@&uuid=%@",identifier,[HTgetDeviceName deviceString],GETUUID];
 //    //加密
 //    NSString*rsaStr=[RSA encryptString:str];
@@ -162,7 +165,9 @@
             NSLog(@"uid=%@",str);
             [USER_DEFAULT setObject:str forKey:@"uid"];
             //保存access_token
+            [USER_DEFAULT setObject:@"50" forKey:@"loginway"];
             NSString *access_token = response[@"access_token"];
+            
             [USER_DEFAULT setObject:access_token forKey:@"access_token"];
             [USER_DEFAULT setObject:response[@"name"] forKey:@"name"];
             [USER_DEFAULT synchronize];
@@ -301,6 +306,11 @@
 didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error
 {
+    
+    
+    NSString *open = user.userID;
+    NSLog(@"open=%@",open);
+    
     [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelAlert+1;
 
     if (error) {
@@ -310,6 +320,9 @@ didSignInForUser:(GIDGoogleUser *)user
     }else
     {
 //改改改aaa谷歌登录
+//         NSString *transString = [NSString stringWithString:[string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        
         [HTprogressHUD showjuhuaText:bendihua(@"正在登录")];
         
         //platform code app_id uuid adid device version channel ip
@@ -325,10 +338,12 @@ didSignInForUser:(GIDGoogleUser *)user
         NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
         NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
         NSString *pram_ip = GETIP;
-        NSString *pram_open_id = [GIDSignIn sharedInstance].currentUser.profile.email;
-//        NSString *pram_
+        NSString *pram_open_id = user.userID;
+        NSString *open_name = user.profile.name;
+        NSString *pram_open_name = [open_name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
         
-        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&open_name=%@&lang=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip,pram_open_name, pram_lang];
         
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
         
@@ -365,7 +380,9 @@ didSignInForUser:(GIDGoogleUser *)user
                 NSString *str = response[@"open_id"];
                 NSLog(@"uid=%@",str);
                 [USER_DEFAULT setObject:str forKey:@"uid"];
+                [USER_DEFAULT setObject:[regex deleUrlBugChar:[GIDSignIn sharedInstance].currentUser.profile.name] forKey:@"showname"];
                 //保存access_token
+                [USER_DEFAULT setObject:@"31" forKey:@"loginway"];
                 NSString *access_token = response[@"access_token"];
                 [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                 [USER_DEFAULT synchronize];
@@ -383,6 +400,8 @@ didSignInForUser:(GIDGoogleUser *)user
             }
         } failure:^(NSError *error) {
             [HTprogressHUD hiddenHUD];
+            [HTAlertView showAlertViewWithText:bendihua(@"登录失败") com:nil];
+            
         }];
         
 
@@ -502,7 +521,7 @@ didSignInForUser:(GIDGoogleUser *)user
     
     //platform code app_id uuid adid device version channel ip
     
-    NSString *pram_platform = @"gamecenter";
+    NSString *pram_platform = @"gameCenter";
     NSString *pram_code = @"";
     //        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
     NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
@@ -515,8 +534,11 @@ didSignInForUser:(GIDGoogleUser *)user
     NSString *pram_ip = GETIP;
     NSString *pram_open_id = [GKLocalPlayer localPlayer].playerID;
     //        NSString *pram_
+    NSString *open_name = [regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias];
+    NSString *pram_open_name = [open_name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
     
-    NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+    NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&open_name=%@&lang=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip,pram_open_name, pram_lang];
     
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
     
@@ -548,11 +570,13 @@ didSignInForUser:(GIDGoogleUser *)user
         NSLog(@"===============分割线==================");
         [USER_DEFAULT setObject:str forKey:@"uid"];
         //保存access_token
+        [USER_DEFAULT setObject:@"32" forKey:@"loginway"];
+        [USER_DEFAULT setObject:[regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias] forKey:@"showname"];
         NSString *access_token = response[@"access_token"];
         [USER_DEFAULT setObject:access_token forKey:@"access_token"];
         [USER_DEFAULT synchronize];
         
-        
+        [HTLoginSuccess loginSuccessWithtoken:access_token];
         [HTConnect shareConnect].loginBackBlock(response,nil);
         [HTConnect showAssistiveTouch];
 

@@ -35,8 +35,8 @@
 -(void)configNetUI
 {
  
-    
-    NSString*paraStr=[NSString stringWithFormat:@"token=%@&zone=%@",USERTOKEN,[USER_DEFAULT objectForKey:@"coo_server"]];
+//改改改aaa历史记录问题
+    NSString*paraStr=[NSString stringWithFormat:@"token=%@&zone=%@",[USER_DEFAULT objectForKey:@"access_token"],[USER_DEFAULT objectForKey:@"coo_server"]];
     
     NSString*url=[NSString stringWithFormat:@"http://aq.gamehetu.com/%@/topic/list",[USER_DEFAULT objectForKey:@"appID"]];
     

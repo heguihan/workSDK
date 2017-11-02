@@ -178,7 +178,7 @@
     NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     
 //    NSString*urlStr=@"http://c.gamehetu.com/stat/login";
-    NSString *newUrlStr = @"http://c.gamehetu.com/stat/logi";
+    NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,STATS_URL];
     
     
     NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
@@ -227,8 +227,9 @@
 {
     
 //改改改aaa获取商品列表
-    NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/%@/product?package=%@&os=ios&channel=%@&server=%@",[USER_DEFAULT objectForKey:@"appID"],[NSBundle mainBundle].bundleIdentifier,[USER_DEFAULT objectForKey:@"channel"],server];
-    NSURL *url=[NSURL URLWithString:string];
+    NSString *newstr = [NSString stringWithFormat:@"%@&zone=%@&user_id=%@",PRODUCT_URL,[USER_DEFAULT objectForKey:@"coo_servr"],[USER_DEFAULT objectForKey:@"coo_server"]];
+//    NSString*string=[NSString stringWithFormat:@"http://c.gamehetu.com/%@/product?package=%@&os=ios&channel=%@&server=%@",[USER_DEFAULT objectForKey:@"appID"],[NSBundle mainBundle].bundleIdentifier,[USER_DEFAULT objectForKey:@"channel"],server];
+    NSURL *url=[NSURL URLWithString:newstr];
     NSURLRequest *request=[NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         if (success) {
@@ -332,16 +333,7 @@
     NSLog(@"取消");
 }
 
-//切换账号
-+(void)changeAccount:(void(^)(NSDictionary*accountInfo,NSDictionary*facebookInfo))changeAccountBlock
-{
-    [HTConnect shareConnect].changeAccount=^(NSDictionary*dict,NSDictionary*facebook)
-    {
-        changeAccountBlock(dict,facebook);
-    };
-}
-
-//
+//切换账号和修改密码时的回调（用于退出游戏界面的通知）
 + (void)gameRestart:(void (^)(NSDictionary *dic))restarBlock
 
 {

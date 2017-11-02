@@ -67,7 +67,8 @@
         
         NSString *newStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,FORGET_URL];
         NSString *pram_account = self.emailTextfield.text;
-        NSString *newStrUrl = [NSString stringWithFormat:@"%@?%@",newStr,pram_account];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+        NSString *newStrUrl = [NSString stringWithFormat:@"%@?account=%@&lang=%@",newStr,pram_account, pram_lang];
         
 //        NSString*strURL=[NSString stringWithFormat:@"http://c.gamehetu.com/passport/find?app=%@&username=%@",[USER_DEFAULT objectForKey:@"appID"],self.emailTextfield.text];
         NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:newStrUrl]];
@@ -76,9 +77,12 @@
             if ([response[@"code"] isEqualToNumber:@0]) {
                 
                 [HTAlertView showAlertViewWithText:bendihua(@"密码已发送,请注意查收") com:nil];
+                [HTprogressHUD hiddenHUD];
             }else
             {
-                [HTAlertView showAlertViewWithText:bendihua(@"邮箱不正确") com:nil];
+//                [HTAlertView showAlertViewWithText:bendihua(@"邮箱不正确") com:nil];
+                [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
+                [HTprogressHUD hiddenHUD];
             }
             
         } failure:^(NSError *error) {

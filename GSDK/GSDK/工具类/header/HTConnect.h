@@ -15,7 +15,7 @@
 
 /*
  *在- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:方法中调用此方法,并输入你们自己的appID
-    countryNumber是手机号的国家代码 如中国是86 (+86 只需写86即可无需写+) isgoingOnline是准备上线的时候需要影藏悬浮球应付检查的，YES为打开，NO为影藏， urlstr是粉丝页的跳转网址
+    countryNumber是手机号的国家代码 如中国是86 (+86 只需写86即可无需写+) isgoingOnline是准备上线的时候需要影藏悬浮球应付检查的，YES为打开，NO为影藏， urlstr是粉丝页的跳转网址， version版本， channel渠道
  */
 +(void)initSDKwithAppID:(NSString*)AppID andPhoneCountryNumber:(NSString*)countryNumber andAudit:(BOOL)isgoingOnline andFansUel:(NSString *)urlstr andVersion:(NSString *)version andChannel:(NSString *)channel;
 
@@ -24,14 +24,11 @@
 /**
  *  展示HTSDK UI并接收登录信息回调
  *
- *  @param infoBlack 回调信息
+ *  @param infoBlack 回调信息 //准备用SDK登录时调用
  */
 +(void)showHTSDKwithLoginInfo:(void(^)(NSDictionary*loginInfo,NSDictionary*thridLoginInfo))infoBlack;
 
-/**
- *  切换账号
- */
-+(void)changeAccount:(void(^)(NSDictionary*accountInfo,NSDictionary*facebookInfo))changeAccountBlock;
+
 
 /**
  *  显示和隐藏悬浮窗,登录成功后会自动显示悬浮窗.
@@ -43,7 +40,7 @@
  *  统计接口
  *
  *  @param type       类型log或者reg
- *  @param version    游戏版本
+ *
  *  @param coo_server 合作伙伴服务器id
  *  @param coo_uid    合作伙伴用户UID
  */

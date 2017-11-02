@@ -78,8 +78,9 @@
         NSString *pram_acess_token = [USER_DEFAULT objectForKey:@"access_token"];
         NSString *pram_old_pwd = [USER_DEFAULT objectForKey:@"password"];
         NSString *pram_password = self.username.text;
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
 
-        NSString *newStr = [NSString stringWithFormat:@"access_token=%@&old_pwd=%@&password=%@",pram_acess_token, pram_old_pwd, pram_password];
+        NSString *newStr = [NSString stringWithFormat:@"access_token=%@&old_pwd=%@&password=%@&lang=%@",pram_acess_token, pram_old_pwd, pram_password, pram_lang];
         //    NSString*str=[NSString stringWithFormat:@"username=%@#device&name=%@&uuid=%@",identifier,[HTgetDeviceName deviceString],GETUUID];
         //    //加密
         //    NSString*rsaStr=[RSA encryptString:str];
@@ -108,18 +109,19 @@
                 
 //                [HTConnect shareConnect].changeAccount(response,nil);
                 [USER_DEFAULT setObject:nil forKey:@"first"];
-                [USER_DEFAULT setObject:nil forKey:@"userInfo"];
+                [USER_DEFAULT setObject:nil forKey:@"usernewinfo"];
                 [HTConnect hideAssistiveTouch];
                 HTChangeAccountController*account=[[HTChangeAccountController alloc]init];
                 HTBaseNavigationController*navi=[[HTBaseNavigationController alloc]initWithRootViewController:account];
                 account.rightButton.hidden=YES;
                 account.backButton.hidden=YES;
                 [HTpresentWindow sharedInstance].rootViewController=navi;
-            }else if ([response[@"msg"]isEqualToString:@"new password error"])
-            {
-                [HTAlertView showAlertViewWithText:bendihua(@"新密码不能和旧密码相同") com:nil];
-
             }
+//            else if ([response[@"msg"]isEqualToString:@"new password error"])
+//            {
+//                [HTAlertView showAlertViewWithText:bendihua(@"新密码不能和旧密码相同") com:nil];
+//
+//            }
             else
             {
                 [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];

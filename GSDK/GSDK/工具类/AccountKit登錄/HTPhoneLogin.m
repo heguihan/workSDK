@@ -33,8 +33,8 @@
     UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:preFillPhoneNumber
                                                                                                             state:inputState];
     viewController.delegate=self;
-//    [[IQKeyboardManager sharedManager] setEnable:NO];
-
+    [[IQKeyboardManager sharedManager] setEnable:NO];
+    
     [con presentViewController:viewController animated:YES completion:NULL];
     self.type=type;
     self.neiFailure=Failure;
@@ -68,7 +68,7 @@
             
             //platform code app_id uuid adid device version channel ip
             
-            NSString *pram_platform = @"accountkit";
+            NSString *pram_platform = @"accountKit";
             NSString *pram_code = [accessToken tokenString];
             NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
             NSString *pram_uuid = GETUUID;
@@ -79,8 +79,12 @@
             NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
             NSString *pram_ip = GETIP;
             NSString *pram_open_id = [accessToken accountID];
+            NSString *open_name = phoneNum;
+            NSString *pram_open_name = [open_name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+            NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
             
-            NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+            
+            NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&oepn_name=%@&lang=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip, pram_open_name, pram_lang];
             
             NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
             
@@ -108,6 +112,8 @@
                 [USER_DEFAULT setObject:str forKey:@"uid"];
                 //保存access_token
                 NSString *access_token = response[@"access_token"];
+                [USER_DEFAULT setObject:phoneNum forKey:@"showname"];
+                [USER_DEFAULT setObject:@"33" forKey:@"loginway"];
                 [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                 [USER_DEFAULT setObject: [accessToken tokenString] forKey:@"accountkitToken"];
                 [USER_DEFAULT synchronize];
@@ -134,7 +140,7 @@
 }
 - (void)viewController:(UIViewController<AKFViewController> *)viewController didFailWithError:(NSError *)error
 {
-    [[IQKeyboardManager sharedManager] setEnable:YES];
+    [[IQKeyboardManager sharedManager] setEnable:NO];
     [HTConnect shareConnect].mywindow.windowLevel=UIWindowLevelAlert+1;
     self.neiFailure();
 }

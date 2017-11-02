@@ -30,8 +30,15 @@
 {
     
 //改改改aaa用于快速登录时显示的账号名字
+    NSDictionary *dicc = dict[@"more"];
+    
+    if(dicc.count == 0)
+    {
+        return [dict valueForKeyPath:@"name"];
+    }
+    
 
-    NSArray*arr=[[dict valueForKeyPath:@"more"] allKeys];
+    NSArray*arr=[dicc allKeys];
     if (arr.count==0) {
         
         return [dict valueForKeyPath:@"name"];
@@ -119,12 +126,19 @@
 +(NSDictionary*)showBindAccountName
 {
     NSDictionary*dict=[USER_DEFAULT objectForKey:@"usernewinfo"];
+    NSDictionary*userInfo;
     NSLog(@"dic = %@",dict);
     NSString *name = dict[@"name"];
-    NSArray *arr = dict[@"more"];
+    NSDictionary *diccc = dict[@"more"];
+    if (diccc.count == 0) {
+        userInfo=[NSDictionary dictionaryWithObjectsAndKeys:@"device",@"type",[dict valueForKeyPath:@"name"],@"name", nil];
+        NSLog(@"userinfo=%@",userInfo);
+        return userInfo;
+    }
+    NSArray *arr = [diccc allKeys];
     NSLog(@"name=%@",name);
 
-    NSDictionary*userInfo;
+//    NSDictionary*userInfo;
     
 //    NSArray*arr=[[dict valueForKeyPath:@"more"] allKeys];
     NSLog(@"%lu",(unsigned long)arr.count);

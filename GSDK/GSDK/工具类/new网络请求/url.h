@@ -15,6 +15,9 @@
 //支付的域名
 #define IAP_URL  @"https://hk.trade.gamehetu.com/"
 
+//产品列表平
+#define PRODUCT_URL  @"http://1021016.api.gamehetu.com/product?gateway=apple"
+
 //忘记密码
 #define FORGET_URL  @"/public/forget"
 

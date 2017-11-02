@@ -114,10 +114,12 @@
        
        NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
        NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
-       NSString *pram_platform = @"accountkit";
+       NSString *pram_platform = @"accountKit";
        NSString *pram_code = [USER_DEFAULT objectForKey:@"accountkitToken"];
-       NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+       NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+       NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@&lang=%@",pram_access_token, pram_platform, pram_code, pram_lang];
        NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
+       
        
        
        
@@ -134,13 +136,16 @@
 
                    [self.navigationController popViewControllerAnimated:NO];
                
-           }else if([response[@"code"] isEqualToNumber:@1])
+           }
+//           else if([response[@"code"] isEqualToNumber:@1])
+//           {
+//               [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
+//               
+//           }
+           else
            {
-               [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
-               
-           }else
-           {
-               [HTAlertView showAlertViewWithText:bendihua(@"綁定失败") com:nil];
+//               [HTAlertView showAlertViewWithText:bendihua(@"綁定失败") com:nil];
+               [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
            }
            
        } failure:^(NSError *error) {
@@ -170,7 +175,8 @@ didSignInForUser:(GIDGoogleUser *)user
         NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
         NSString *pram_platform = @"google";
         NSString *pram_code = user.authentication.idToken;
-        NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+        NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@&lang=%@",pram_access_token, pram_platform, pram_code, pram_lang];
         NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
         
         
@@ -191,13 +197,16 @@ didSignInForUser:(GIDGoogleUser *)user
                     [self.navigationController popViewControllerAnimated:NO];
                     
 
-            }else if([response[@"code"] isEqualToNumber:@1])
+            }
+//            else if([response[@"code"] isEqualToNumber:@1])
+//            {
+//                [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
+//                
+//            }
+            else
             {
-                [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
-                
-            }else
-            {
-                [HTAlertView showAlertViewWithText:bendihua(@"綁定失败") com:nil];
+//                [HTAlertView showAlertViewWithText:bendihua(@"綁定失败") com:nil];
+                [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
             }
             
         } failure:^(NSError *error) {
@@ -278,9 +287,10 @@ didSignInForUser:(GIDGoogleUser *)user
     
     NSString *newUrlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL,BIND_URL];
     NSString *pram_access_token =[USER_DEFAULT objectForKey:@"access_token"];
-    NSString *pram_platform = @"gamecenter";
+    NSString *pram_platform = @"gameCenter";
     NSString *pram_code = @"";
-    NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@",pram_access_token, pram_platform, pram_code];
+    NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+    NSString *newPramStr = [NSString stringWithFormat:@"access_token=%@&platform=%@&code=%@&lang=%@",pram_access_token, pram_platform, pram_code, pram_lang];
     NSString *urlStr = [NSString stringWithFormat:@"%@?%@",newUrlStr, newPramStr];
 
     
@@ -295,13 +305,16 @@ didSignInForUser:(GIDGoogleUser *)user
                 
                     [self.navigationController popViewControllerAnimated:NO];
 
-            }else if([response[@"code"] isEqualToNumber:@1])
+            }
+//            else if([response[@"code"] isEqualToNumber:@1])
+//            {
+//                [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
+//                
+//            }
+            else
             {
-                [HTAlertView showAlertViewWithText:bendihua(@"绑定失败,该账号已绑定过") com:nil];
-                
-            }else
-            {
-                [HTAlertView showAlertViewWithText:bendihua(@"綁定失败") com:nil];
+//                [HTAlertView showAlertViewWithText:bendihua(@"綁定失败") com:nil];
+                [HTAlertView showAlertViewWithText:response[@"msg"] com:nil];
             }
             
         } failure:^(NSError *error) {

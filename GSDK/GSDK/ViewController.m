@@ -64,12 +64,12 @@
 //        NSLog(@"%@,\n%@",loginInfo,FaceBookInfo);
 //        NSLog(@"数值");
 //    }];
-    
-    [HTConnect changeAccount:^(NSDictionary *accountInfo, NSDictionary *facebookInfo) {
-        
-        NSLog(@"接入方在这里写退出登录的代码%@\n,%@",accountInfo,facebookInfo);
-        
-    }];
+//    
+//    [HTConnect changeAccount:^(NSDictionary *accountInfo, NSDictionary *facebookInfo) {
+//        
+//        NSLog(@"接入方在这里写退出登录的代码%@\n,%@",accountInfo,facebookInfo);
+//        
+//    }];
     
     
     [HTConnect gameRestart:^(NSDictionary *dic) {
@@ -173,13 +173,19 @@
 //    
     
 //    [self test1];
-    [self test222];
+//    [self test222];
+    NSString *str = [@"何圭韩" stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"str=%@",str);
+    NSLog(@"ok");
     
 }
 
 - (void)test222
 {
-    [SKStoreReviewController requestReview];
+//    [SKStoreReviewController requestReview];
+    [HTConnect shareToFacebookWithURL:@"http://baidu.com" imageURL:@"http://baidu.com" contentTitle:@"分享contentTitle" contentDescription:@"content描述" shareInfoBlock:^(NSDictionary *shareInfoDic) {
+        NSLog(@"分享");
+    }];
     
 }
 

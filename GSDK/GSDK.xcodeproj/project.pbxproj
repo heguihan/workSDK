@@ -7,11 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		80F239D91F99D59D00110829 /* HTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F239D81F99D59D00110829 /* HTNetwork.m */; };
-		80F9989C1F999AE900FF2CDB /* HTDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F9989B1F999AE900FF2CDB /* HTDevice.m */; };
 		F006FE951DB0E97A0040122A /* 000.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F006FE941DB0E97A0040122A /* 000.jpg */; };
-		F03923331FA1BA2B001A7ED9 /* HTgetIP.m in Sources */ = {isa = PBXBuildFile; fileRef = F03923321FA1BA2B001A7ED9 /* HTgetIP.m */; };
-		F04434BC1FA6C80A00D650C0 /* HTLoginSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = F04434BB1FA6C80A00D650C0 /* HTLoginSuccess.m */; };
 		F04434CE1FA71DC000D650C0 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04434BF1FA71DC000D650C0 /* AccountKit.framework */; };
 		F04434CF1FA71DC100D650C0 /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F04434C01FA71DC000D650C0 /* AccountKitStrings.bundle */; };
 		F04434D01FA71DC100D650C0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04434C11FA71DC000D650C0 /* Bolts.framework */; };
@@ -29,6 +25,10 @@
 		F04434DD1FA71E3200D650C0 /* AccountKitStrings.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = F04434C01FA71DC000D650C0 /* AccountKitStrings.bundle */; };
 		F04434DF1FA71E3200D650C0 /* GoogleSignIn.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = F04434CA1FA71DC000D650C0 /* GoogleSignIn.bundle */; };
 		F04434E41FA813DB00D650C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F04434E31FA813DB00D650C0 /* GoogleService-Info.plist */; };
+		F044352E1FA9997A00D650C0 /* HTDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = F04435261FA9997A00D650C0 /* HTDevice.m */; };
+		F044352F1FA9997A00D650C0 /* HTgetIP.m in Sources */ = {isa = PBXBuildFile; fileRef = F04435281FA9997A00D650C0 /* HTgetIP.m */; };
+		F04435301FA9997A00D650C0 /* HTLoginSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = F044352A1FA9997A00D650C0 /* HTLoginSuccess.m */; };
+		F04435311FA9997A00D650C0 /* HTNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = F044352C1FA9997A00D650C0 /* HTNetwork.m */; };
 		F06161D01DF6A25400762ED4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F06161CF1DF6A25400762ED4 /* MobileCoreServices.framework */; };
 		F06161D21DF6A25F00762ED4 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F06161D11DF6A25F00762ED4 /* ImageIO.framework */; };
 		F069F5D61D5340A700AA59DE /* GSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F069F5D51D5340A700AA59DE /* GSDKTests.m */; };
@@ -140,16 +140,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		80F239D71F99D59D00110829 /* HTNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTNetwork.h; sourceTree = "<group>"; };
-		80F239D81F99D59D00110829 /* HTNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTNetwork.m; sourceTree = "<group>"; };
-		80F239DA1F99D5C900110829 /* url.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = url.h; sourceTree = "<group>"; };
-		80F9989A1F999AE900FF2CDB /* HTDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTDevice.h; sourceTree = "<group>"; };
-		80F9989B1F999AE900FF2CDB /* HTDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTDevice.m; sourceTree = "<group>"; };
 		F006FE941DB0E97A0040122A /* 000.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 000.jpg; sourceTree = "<group>"; };
-		F03923311FA1BA2B001A7ED9 /* HTgetIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTgetIP.h; sourceTree = "<group>"; };
-		F03923321FA1BA2B001A7ED9 /* HTgetIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTgetIP.m; sourceTree = "<group>"; };
-		F04434BA1FA6C80A00D650C0 /* HTLoginSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTLoginSuccess.h; sourceTree = "<group>"; };
-		F04434BB1FA6C80A00D650C0 /* HTLoginSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTLoginSuccess.m; sourceTree = "<group>"; };
 		F04434BF1FA71DC000D650C0 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
 		F04434C01FA71DC000D650C0 /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AccountKitStrings.bundle; sourceTree = "<group>"; };
 		F04434C11FA71DC000D650C0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -165,6 +156,15 @@
 		F04434CC1FA71DC000D650C0 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
 		F04434CD1FA71DC000D650C0 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		F04434E31FA813DB00D650C0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F04435251FA9997A00D650C0 /* HTDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTDevice.h; path = "new网络请求/HTDevice.h"; sourceTree = "<group>"; };
+		F04435261FA9997A00D650C0 /* HTDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTDevice.m; path = "new网络请求/HTDevice.m"; sourceTree = "<group>"; };
+		F04435271FA9997A00D650C0 /* HTgetIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTgetIP.h; sourceTree = "<group>"; };
+		F04435281FA9997A00D650C0 /* HTgetIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTgetIP.m; sourceTree = "<group>"; };
+		F04435291FA9997A00D650C0 /* HTLoginSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTLoginSuccess.h; sourceTree = "<group>"; };
+		F044352A1FA9997A00D650C0 /* HTLoginSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTLoginSuccess.m; sourceTree = "<group>"; };
+		F044352B1FA9997A00D650C0 /* HTNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTNetwork.h; sourceTree = "<group>"; };
+		F044352C1FA9997A00D650C0 /* HTNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTNetwork.m; sourceTree = "<group>"; };
+		F044352D1FA9997A00D650C0 /* url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = url.h; sourceTree = "<group>"; };
 		F06161CF1DF6A25400762ED4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F06161D11DF6A25F00762ED4 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F069F5B81D5340A700AA59DE /* GSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -387,27 +387,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		80F239D61F99D56000110829 /* new网络请求 */ = {
-			isa = PBXGroup;
-			children = (
-				80F239DA1F99D5C900110829 /* url.h */,
-				80F239D71F99D59D00110829 /* HTNetwork.h */,
-				80F239D81F99D59D00110829 /* HTNetwork.m */,
-				F03923311FA1BA2B001A7ED9 /* HTgetIP.h */,
-				F03923321FA1BA2B001A7ED9 /* HTgetIP.m */,
-				F04434BA1FA6C80A00D650C0 /* HTLoginSuccess.h */,
-				F04434BB1FA6C80A00D650C0 /* HTLoginSuccess.m */,
-			);
-			name = "new网络请求";
-			sourceTree = "<group>";
-		};
 		80F998991F999AD000FF2CDB /* 设备信息 */ = {
 			isa = PBXGroup;
 			children = (
-				80F9989A1F999AE900FF2CDB /* HTDevice.h */,
-				80F9989B1F999AE900FF2CDB /* HTDevice.m */,
+				F04435251FA9997A00D650C0 /* HTDevice.h */,
+				F04435261FA9997A00D650C0 /* HTDevice.m */,
 			);
 			name = "设备信息";
+			sourceTree = "<group>";
+		};
+		F04435171FA9994A00D650C0 /* new网络请求 */ = {
+			isa = PBXGroup;
+			children = (
+				F04435271FA9997A00D650C0 /* HTgetIP.h */,
+				F04435281FA9997A00D650C0 /* HTgetIP.m */,
+				F04435291FA9997A00D650C0 /* HTLoginSuccess.h */,
+				F044352A1FA9997A00D650C0 /* HTLoginSuccess.m */,
+				F044352B1FA9997A00D650C0 /* HTNetwork.h */,
+				F044352C1FA9997A00D650C0 /* HTNetwork.m */,
+				F044352D1FA9997A00D650C0 /* url.h */,
+			);
+			path = "new网络请求";
 			sourceTree = "<group>";
 		};
 		F06161CE1DF6A25400762ED4 /* Frameworks */ = {
@@ -527,7 +527,7 @@
 		F0A24C7F1DB7559000139815 /* 工具类 */ = {
 			isa = PBXGroup;
 			children = (
-				80F239D61F99D56000110829 /* new网络请求 */,
+				F04435171FA9994A00D650C0 /* new网络请求 */,
 				80F998991F999AD000FF2CDB /* 设备信息 */,
 				F0F3AE8C1E1B921800A702E1 /* HTpresentWindow.h */,
 				F0F3AE8D1E1B921800A702E1 /* HTpresentWindow.m */,
@@ -1119,7 +1119,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0AE4F821DE53D3600FEACD7 /* HTPOSTImageArray.m in Sources */,
-				80F9989C1F999AE900FF2CDB /* HTDevice.m in Sources */,
 				F0A24D171DB7559000139815 /* HTBaseLabel.m in Sources */,
 				F0A24D151DB7559000139815 /* HTgetDeviceName.m in Sources */,
 				F0F3AE8E1E1B921800A702E1 /* HTpresentWindow.m in Sources */,
@@ -1146,6 +1145,7 @@
 				F0A24D241DB7559000139815 /* HTFAQView.m in Sources */,
 				F0A24D1D1DB7559000139815 /* HTHistoryCell.m in Sources */,
 				F0A24D191DB7559000139815 /* HTBaseViewController.m in Sources */,
+				F04435311FA9997A00D650C0 /* HTNetwork.m in Sources */,
 				F0F3B57B1E247A0A00A702E1 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				F0A24D161DB7559000139815 /* HTBaseButton.m in Sources */,
 				F0A24D1A1DB7559000139815 /* HTTextField.m in Sources */,
@@ -1157,22 +1157,22 @@
 				F0F3B57A1E247A0A00A702E1 /* IQKeyboardManager.m in Sources */,
 				F0A24D311DB7559000139815 /* HTRegisterController.m in Sources */,
 				F0A24D0B1DB7559000139815 /* UUID.m in Sources */,
-				F04434BC1FA6C80A00D650C0 /* HTLoginSuccess.m in Sources */,
+				F04435301FA9997A00D650C0 /* HTLoginSuccess.m in Sources */,
 				F0A24D081DB7559000139815 /* HTModelCenter.m in Sources */,
 				F0A24D091DB7559000139815 /* KeyChainStore.m in Sources */,
 				F0A24D1F1DB7559000139815 /* HTHistoryDetailCell.m in Sources */,
 				F0A24D251DB7559000139815 /* HTforgetPasswordController.m in Sources */,
 				F0A24D2C1DB7559000139815 /* HTCustomButtonView.m in Sources */,
 				F0A24D231DB7559000139815 /* HTFAQCell.m in Sources */,
-				F03923331FA1BA2B001A7ED9 /* HTgetIP.m in Sources */,
+				F044352F1FA9997A00D650C0 /* HTgetIP.m in Sources */,
 				F0A24D2A1DB7559000139815 /* HTAlbumController.m in Sources */,
+				F044352E1FA9997A00D650C0 /* HTDevice.m in Sources */,
 				F0A24D051DB7559000139815 /* FacebookLogin.m in Sources */,
 				F0F3B5791E247A0A00A702E1 /* IQUIWindow+Hierarchy.m in Sources */,
 				F0A24D201DB7559000139815 /* HTHistoryDetailController.m in Sources */,
 				F0A24D0C1DB7559000139815 /* UIView+UIViewAdditional.m in Sources */,
 				F0F3B57C1E247A0A00A702E1 /* IQTextView.m in Sources */,
 				F0A24D331DB7559000139815 /* HTbindButtonView.m in Sources */,
-				80F239D91F99D59D00110829 /* HTNetwork.m in Sources */,
 				F0A24D301DB7559000139815 /* HTAccountController.m in Sources */,
 				F0F3B57E1E247A0A00A702E1 /* IQPreviousNextView.m in Sources */,
 				F0F3B57D1E247A0A00A702E1 /* IQBarButtonItem.m in Sources */,

@@ -48,21 +48,29 @@ didSignInForUser:(GIDGoogleUser *)user
         
         NSString *pram_platform = @"google";
         NSString *pram_code = user.authentication.idToken;
+        //        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
         NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
         NSString *pram_uuid = GETUUID;
         NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
-        NSString *pram_device = [HTgetDeviceName deviceString];
+        //        NSString *pram_device = [HTgetDeviceName deviceString];
+        NSString *pram_device = @"ios";
         NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
         NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
         NSString *pram_ip = GETIP;
+//        NSString *pram_open_id = [GIDSignIn sharedInstance].currentUser.profile.email;
+        //        NSString *pram_
         
-        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&code=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@",pram_platform, pram_code, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip];
+        NSString *pram_open_id = user.userID;
+        NSString *open_name = user.profile.name;
+        NSString *pram_open_name = [open_name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
+        
+        NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&open_name=%@&lang=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip, pram_open_name,pram_lang];
         
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
         
         NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@",urlStr,newPramStr];
-        
-        
+        NSLog(@"url=%@",newUrlStr);
         
 //        NSString*str=[NSString stringWithFormat:@"username=%@#google&name=%@&uuid=%@&token=%@",[GIDSignIn sharedInstance].currentUser.userID,[GIDSignIn sharedInstance].currentUser.profile.name,[UUID getUUID],user.authentication.idToken];
 //        NSString*rsaStr=[RSA encryptString:str];
@@ -84,7 +92,9 @@ didSignInForUser:(GIDGoogleUser *)user
                 NSLog(@"uid=%@",str);
                 [USER_DEFAULT setObject:str forKey:@"uid"];
                 //保存access_token
+                [USER_DEFAULT setObject:@"31" forKey:@"loginway"];
                 NSString *access_token = response[@"access_token"];
+                [USER_DEFAULT setObject:[regex deleUrlBugChar:[GIDSignIn sharedInstance].currentUser.profile.name] forKey:@"showname"];
                 [USER_DEFAULT setObject:access_token forKey:@"access_token"];
                 [USER_DEFAULT synchronize];
                 
@@ -251,25 +261,45 @@ didSignInForUser:(GIDGoogleUser *)user
 {
     
 //改改改aaa 切换账号的gamecenter登录
-    NSString*str=[NSString stringWithFormat:@"username=%@#apple&name=%@&uuid=%@",
-                  [GKLocalPlayer localPlayer].playerID,
-                  [GKLocalPlayer localPlayer].alias,
-                  [UUID getUUID]];
+//    NSString*str=[NSString stringWithFormat:@"username=%@#apple&name=%@&uuid=%@",
+//                  [GKLocalPlayer localPlayer].playerID,
+//                  [GKLocalPlayer localPlayer].alias,
+//                  [UUID getUUID]];
+//    
+//    NSString*urlStr=[NSString stringWithFormat:@"app=%@&data=%@&format=json&version=2.0",
+//                     [USER_DEFAULT objectForKey:@"appID"],
+//                     [RSA encryptString:str]];
+//    
+//    NSString*mainStr=@"http://c.gamehetu.com/passport/login";
     
-    NSString*urlStr=[NSString stringWithFormat:@"app=%@&data=%@&format=json&version=2.0",
-                     [USER_DEFAULT objectForKey:@"appID"],
-                     [RSA encryptString:str]];
     
-    NSString*mainStr=@"http://c.gamehetu.com/passport/login";
+    NSString *pram_platform = @"gameCenter";
+    NSString *pram_code = @"";
+    //        NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+    NSString *pram_app_id = [USER_DEFAULT objectForKey:@"appID"];
+    NSString *pram_uuid = GETUUID;
+    NSString *pram_adid = [USER_DEFAULT objectForKey:@"adid"];
+    //        NSString *pram_device = [HTgetDeviceName deviceString];
+    NSString *pram_device = @"ios";
+    NSString *pram_version = [USER_DEFAULT objectForKey:@"version"];
+    NSString *pram_channel = [USER_DEFAULT objectForKey:@"channel"];
+    NSString *pram_ip = GETIP;
+    NSString *pram_open_id = [GKLocalPlayer localPlayer].playerID;
+    //        NSString *pram_
+    NSString *open_name = [regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias];
+    NSString *pram_open_name = [open_name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *pram_lang = [USER_DEFAULT objectForKey:@"lang"];
     
+    NSString *newPramStr = [NSString stringWithFormat:@"platform=%@&access_token=%@&open_id=%@&app_id=%@&uuid=%@&adid=%@&device=%@&version=%@&channel=%@&ip=%@&open_name=%@&lang=%@",pram_platform, pram_code,pram_open_id, pram_app_id, pram_uuid, pram_adid, pram_device, pram_version, pram_channel, pram_ip, pram_open_name, pram_lang];
     
-    
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",SERVER_URL, LOGIN_URL];
+
     
     //這是為了保存request準備的
-    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:mainStr] cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:15];
+    NSMutableURLRequest*request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr] cachePolicy:(NSURLRequestUseProtocolCachePolicy) timeoutInterval:15];
     [request setHTTPMethod:@"POST"];
     
-    NSData*paraData=[urlStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSData*paraData=[newPramStr dataUsingEncoding:NSUTF8StringEncoding];
     [request setHTTPBody:paraData];
     [HTNetWorking sendRequest:request ifSuccess:^(id response) {
     
@@ -280,6 +310,22 @@ didSignInForUser:(GIDGoogleUser *)user
             
             NSDictionary *changDic = @{@"code":@2,@"msg":@"success"};
             [HTConnect shareConnect].changePassword(changDic);
+            
+            NSString *str = response[@"open_id"];
+            NSLog(@"uid=%@",str);
+            [USER_DEFAULT setObject:str forKey:@"uid"];
+            //保存access_token
+            [USER_DEFAULT setObject:@"32" forKey:@"loginway"];
+            NSString *access_token = response[@"access_token"];
+             [USER_DEFAULT setObject:[regex deleUrlBugChar:[GKLocalPlayer localPlayer].alias] forKey:@"showname"];
+            [USER_DEFAULT setObject:access_token forKey:@"access_token"];
+//            [USER_DEFAULT setObject:@"apple" forKey:@"loginway"];
+            //保存密码
+//            NSLog(@"password=%@",password);
+//            [USER_DEFAULT setObject:password forKey:@"password"];
+            [USER_DEFAULT synchronize];
+            [HTLoginSuccess loginSuccessWithtoken:access_token];
+            
             
             [HTConnect shareConnect].changeAccount(response,nil);
             [HTConnect showAssistiveTouch];
